@@ -34,9 +34,73 @@ H_BANDS = [(0.16, 0.21, "gl-a", 4.3, 2.6), (0.38, 0.42, "gl-b", 5.9, 3.4),
 # vertical / diagonal slices: (kind, x_frac, width_px, dx, dy, duration, delay)
 SLICES = [("v", 0.22, 22, 0, -9, 5.3, 3.0), ("v", 0.63, 16, 0, 7, 7.1, 5.2),
           ("d", 0.40, 18, 6, -6, 6.3, 4.4)]
-# eye positions (row, col) in the text grid for the (X 0) flash - tuned for scripts/avatar.txt
-EYES = [(24.6, 30.0, "X"), (23.4, 62.0, "0")]
-EYE_EVERY = 15
+# "hacked" overexposure flash: an X-shaped white/red splash over the eye.
+# HACK_AT is (row, col) in the text grid - tuned for scripts/avatar.txt
+HACK_AT = (23.0, 66.0)
+HACK_HALF = (128, 100)           # half width / half height of the X in px
+HACK_EVERY = 15                  # seconds between flashes
+DARK_RED = "#9B0018"
+
+
+def hack_overlay(cx: float, cy: float) -> tuple[str, str]:
+    """Return (defs, markup) for the X-shaped overexposed splash centred on (cx, cy)."""
+    import math
+    import random
+    rnd = random.Random(2077)
+    hx, hy = HACK_HALF
+    arms = [((cx - hx, cy - hy), (cx + hx, cy + hy)), ((cx + hx * .9, cy - hy), (cx - hx * .9, cy + hy))]
+
+    def stroke(a, b, jitter, width, color, op):
+        pts, n = [], 7
+        for k in range(n + 1):
+            t = k / n
+            px = a[0] + (b[0] - a[0]) * t + rnd.uniform(-jitter, jitter)
+            py = a[1] + (b[1] - a[1]) * t + rnd.uniform(-jitter, jitter)
+            pts.append(f"{px:.1f} {py:.1f}")
+        return (f'<path d="M{" L".join(pts)}" fill="none" stroke="{color}" stroke-width="{width:.1f}" '
+                f'stroke-linecap="round" stroke-linejoin="round" opacity="{op}"/>')
+
+    # white blown-out X (blurred), then red ink strokes on top
+    white = "".join(stroke(a, b, 8, 62, "#fff", 1) for a, b in arms)
+    white += f'<ellipse cx="{cx}" cy="{cy}" rx="70" ry="54" fill="url(#blowout)"/>'
+    reds = []
+    for a, b in arms:
+        for _ in range(5):
+            reds.append(stroke(a, b, 22, rnd.uniform(3, 16), rnd.choice([RED, RED, DARK_RED]), rnd.choice([.75, .9, 1])))
+    # thorn-like scratches flying out of the centre
+    thorns = []
+    for _ in range(26):
+        ang = rnd.uniform(0, 2 * math.pi)
+        r0, r1 = rnd.uniform(10, 40), rnd.uniform(60, 165)
+        x0, y0 = cx + math.cos(ang) * r0, cy + math.sin(ang) * r0 * .8
+        x1, y1 = cx + math.cos(ang) * r1, cy + math.sin(ang) * r1 * .8
+        bend = rnd.uniform(-30, 30)
+        mx, my = (x0 + x1) / 2 + bend, (y0 + y1) / 2 - bend
+        thorns.append(f'<path d="M{x0:.1f} {y0:.1f} Q{mx:.1f} {my:.1f} {x1:.1f} {y1:.1f}" fill="none" '
+                      f'stroke="{rnd.choice([RED, RED, DARK_RED, "#fff"])}" stroke-width="{rnd.uniform(.8, 3.2):.1f}" '
+                      f'stroke-linecap="round"/>')
+    drops = "".join(f'<circle cx="{cx + rnd.uniform(-hx, hx):.1f}" cy="{cy + rnd.uniform(-hy, hy):.1f}" '
+                    f'r="{rnd.uniform(1, 4):.1f}" fill="{rnd.choice([RED, DARK_RED, "#fff"])}"/>' for _ in range(30))
+    xclip = "".join(stroke(a, b, 0, 70, "#fff", 1) for a, b in arms)
+
+    d = f'''<filter id="ink" x="-30%" y="-30%" width="160%" height="160%">
+    <feTurbulence type="fractalNoise" baseFrequency=".045" numOctaves="3" seed="9"/>
+    <feDisplacementMap in="SourceGraphic" scale="18" xChannelSelector="R" yChannelSelector="G"/></filter>
+  <filter id="burn" x="-30%" y="-30%" width="160%" height="160%">
+    <feTurbulence type="fractalNoise" baseFrequency=".03" numOctaves="2" seed="4"/>
+    <feDisplacementMap in="SourceGraphic" scale="24" xChannelSelector="R" yChannelSelector="G" result="d"/>
+    <feGaussianBlur in="d" stdDeviation="2.5"/></filter>
+  <radialGradient id="blowout"><stop offset="0" stop-color="#fff"/><stop offset=".6" stop-color="#fff" stop-opacity=".85"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
+  <mask id="xmask"><rect width="{W}" height="{H}" fill="#000"/>{xclip}</mask>'''
+    m = f'''<g class="hack">
+      <rect x="{ART_BOX[0]}" y="{ART_BOX[1]}" width="{ART_BOX[2]}" height="{ART_BOX[3]}" fill="{RED}" opacity=".07"/>
+      <g mask="url(#xmask)"><use href="#rows" fill="{RED}" transform="translate(4 1)"/></g>
+      <g filter="url(#burn)" opacity=".92">{white}</g>
+      <g mask="url(#xmask)"><use href="#rows" fill="#fff"/></g>
+      <g filter="url(#ink)">{"".join(reds)}{"".join(thorns)}</g>
+      {drops}
+    </g>'''
+    return d, m
 
 
 def load_text(path: Path) -> list[str]:
@@ -115,13 +179,8 @@ def build_svg(lines: list[str]) -> str:
                       f'<use href="#rows" transform="translate({dx} {dy})"/></g>')
 
     # (X 0) eye flash
-    eye_fs = lh * 3.2
-    eyes = "".join(
-        f'<text x="{ox + c * cw + 2:.1f}" y="{oy + r * lh + eye_fs * .35:.1f}" fill="{RED}" opacity=".85">{g}</text>'
-        f'<text x="{ox + c * cw:.1f}" y="{oy + r * lh + eye_fs * .35:.1f}" fill="#fff">{g}</text>'
-        for r, c, g in EYES)
-    ey0 = oy + (min(r for r, _, _ in EYES) - 2) * lh
-    ey1 = oy + (max(r for r, _, _ in EYES) + 2) * lh
+    hack_defs, hack = hack_overlay(ox + HACK_AT[1] * cw, oy + HACK_AT[0] * lh)
+    t_hack = T + 7
 
     beam_y0 = oy - 4
     return f"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}" role="img" aria-label="Animated ASCII avatar">
@@ -136,18 +195,21 @@ def build_svg(lines: list[str]) -> str:
   </linearGradient>
   <clipPath id="art"><rect x="{bx}" y="{by - 6}" width="{bw}" height="{bh + 12}"/></clipPath>
   {"".join(clips)}
+  {hack_defs}
 </defs>
 <style>
   {base_css()}
   {loader_css()}
   .r{{opacity:0;white-space:pre;animation:boot .45s ease-out forwards}}
   @keyframes boot{{0%{{opacity:0;transform:translateX(-14px)}}55%{{opacity:1;transform:translateX(4px)}}100%{{opacity:1;transform:translateX(0)}}}}
-  @keyframes gl-a{{0%,100%{{transform:translateX(0);fill:url(#ink)}}91%{{transform:translateX(-7px);fill:{RED}}}93%{{transform:translateX(5px);fill:#fff}}95%{{transform:translateX(-2px);fill:url(#ink)}}97%{{transform:translateX(0)}}}}
-  @keyframes gl-b{{0%,100%{{transform:translateX(0);fill:url(#ink)}}88%{{transform:translateX(6px);fill:#fff}}90%{{transform:translateX(-4px);fill:{CY}}}92%{{transform:translateX(0);fill:url(#ink)}}}}
+  @keyframes gl-a{{0%,100%{{transform:translateX(0)}}91%{{transform:translateX(-7px);fill:{RED}}}93%{{transform:translateX(5px);fill:#fff}}95%{{transform:translateX(-2px)}}97%{{transform:translateX(0)}}}}
+  @keyframes gl-b{{0%,100%{{transform:translateX(0)}}88%{{transform:translateX(6px);fill:#fff}}90%{{transform:translateX(-4px);fill:{CY}}}92%{{transform:translateX(0)}}}}
   .sl{{opacity:0;animation-name:sl;animation-timing-function:steps(1);animation-iteration-count:infinite}}
   @keyframes sl{{0%,100%{{opacity:0}}90%{{opacity:1}}92%{{opacity:0}}94%{{opacity:1}}95%{{opacity:0}}}}
-  .eye{{opacity:0;animation:eye {EYE_EVERY}s steps(1) {T + 7:.1f}s infinite}}
-  @keyframes eye{{0%,100%{{opacity:0}}93%{{opacity:1;transform:translateX(-3px)}}94%{{opacity:1;transform:translateX(3px)}}95%{{opacity:0}}96%{{opacity:1;transform:none}}97.5%{{opacity:0}}}}
+  .hack,.alien{{opacity:0;animation:hack {HACK_EVERY}s steps(1) {t_hack:.1f}s infinite}}
+  .human{{animation:human {HACK_EVERY}s steps(1) {t_hack:.1f}s infinite}}
+  @keyframes hack{{0%,100%{{opacity:0}}88%{{opacity:1;transform:translate(-4px,1px)}}88.6%{{opacity:.15}}89.2%{{opacity:1;transform:translate(3px,-2px)}}90%{{opacity:1;transform:none}}94.5%{{opacity:1;transform:translate(-2px,0)}}95%{{opacity:.3}}95.4%{{opacity:1;transform:none}}96.6%{{opacity:0}}97%{{opacity:.7}}97.4%{{opacity:0}}}}
+  @keyframes human{{0%,100%{{opacity:1}}88%{{opacity:0}}97.4%{{opacity:1}}}}
   .beam{{opacity:0;animation:beam {rows * step + 0.5:.2f}s linear {start:.2f}s forwards}}
   @keyframes beam{{0%{{opacity:1;transform:translateY(0)}}96%{{opacity:1}}100%{{opacity:0;transform:translateY({art_h + 8:.1f}px)}}}}
   .sweep{{opacity:0;animation:sweep 5s linear {boot_end:.2f}s infinite}}
@@ -165,11 +227,7 @@ def build_svg(lines: list[str]) -> str:
 {chr(10).join("      " + b for b in body if b)}
     </g></g>
     {"".join(slices)}
-    <g class="eye">
-      <rect x="{bx}" y="{ey0:.1f}" width="{bw}" height="{ey1 - ey0:.1f}" fill="{RED}" opacity=".22"/>
-      <rect x="{bx}" y="{(ey0 + ey1) / 2:.1f}" width="{bw}" height="1.5" fill="#fff" opacity=".7"/>
-      <g class="mono" font-size="{eye_fs:.1f}" font-weight="700" text-anchor="middle">{eyes}</g>
-    </g>
+    {hack}
     <rect x="{bx}" y="0" width="{bw}" height="120" fill="url(#sweep)" class="sweep"/>
     <g class="beam"><rect x="{bx}" y="{beam_y0:.1f}" width="{bw}" height="2" fill="{CY}"/><rect x="{bx}" y="{beam_y0 - 14:.1f}" width="{bw}" height="14" fill="{CY}" opacity=".12"/></g>
   </g>
@@ -178,6 +236,10 @@ def build_svg(lines: list[str]) -> str:
   <g class="mono" font-size="12" letter-spacing="1.5" text-anchor="end">
     <text x="{W - 20}" y="{H - 18}" fill="{DIM}" class="dec">DECODING<tspan class="blink">_</tspan></text>
     <text x="{W - 20}" y="{H - 18}" fill="{DIM}" class="ok">IDENTITY &#9656; <tspan fill="{OR}">VERIFIED</tspan></text>
+  </g>
+  <g class="mono ok" font-size="12" letter-spacing="1.5">
+    <text x="20" y="{H - 18}" fill="{DIM}" class="human">RACE: <tspan fill="{CY}">human</tspan></text>
+    <text x="20" y="{H - 18}" fill="{DIM}" class="alien">RACE: <tspan fill="{RED}" font-weight="700">???</tspan></text>
   </g>
 </g>
 </svg>
