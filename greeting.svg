@@ -1,102 +1,39 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 80" width="100%" height="80">
   <defs>
-    <!-- Khai báo dải màu cam gradient -->
-    <linearGradient id="orange-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#FF512F" />
-      <stop offset="100%" stop-color="#F09819" />
+    <!-- Cyberpunk Gradient: Xanh Neon sang Cam Neon -->
+    <linearGradient id="cyber-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#00F0FF" />
+      <stop offset="100%" stop-color="#FF9E00" />
     </linearGradient>
   </defs>
 
-  <!-- Khung nền đen của Terminal -->
-  <rect width="100%" height="100%" fill="#0d1117" rx="8" stroke="#30363d" stroke-width="1.5" />
+  <!-- Nền đen tuyền, viền xanh neon -->
+  <rect width="100%" height="100%" fill="#000000" rx="8" stroke="#00F0FF" stroke-width="1.5" />
   
   <style>
-    /* Font chữ và màu sắc cơ bản */
-    .text-container {
-      font-family: 'Fira Code', 'Courier New', Courier, monospace;
-      font-size: 24px;
-      font-weight: bold;
-      fill: #c9d1d9; 
-    }
-    
-    /* Gán màu gradient cho biệt danh */
-    .name { fill: url(#orange-gradient); }
-    
-    /* Hiệu ứng nhấp nháy cho con trỏ */
-    .cursor {
-      fill: #c9d1d9;
-      animation: blink 0.8s infinite;
-    }
-    @keyframes blink {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0; }
-    }
-
-    /* 1. Hiệu ứng gõ chữ System.init (Mở rộng lề trái -10px để không cắt chữ) */
-    .type-init {
-      clip-path: polygon(-10px -10px, -10px -10px, -10px 100px, -10px 100px);
-      animation: type-init-anim 7s forwards;
-    }
-    @keyframes type-init-anim {
-      0% { clip-path: polygon(-10px -10px, -10px -10px, -10px 100px, -10px 100px); }
-      15%, 100% { clip-path: polygon(-10px -10px, 300px -10px, 300px 100px, -10px 100px); }
-    }
-
-    /* 2. Hiển thị vòng xoay loading trong 2 giây */
-    .spinner-visibility {
-      opacity: 0;
-      animation: vis-spinner 7s forwards;
-    }
-    @keyframes vis-spinner {
-      0%, 15% { opacity: 0; }        
-      15.1%, 44.9% { opacity: 1; }   
-      45%, 100% { opacity: 0; }      
-    }
-    .spinner-spin {
-      transform-origin: 280px 42px; 
-      animation: spin 0.8s linear infinite;
-    }
-    @keyframes spin { 
-      100% { transform: rotate(360deg); } 
-    }
-
-    /* 3. Dấu check xanh xuất hiện */
-    .check {
-      opacity: 0;
-      fill: #4ade80; 
-      animation: vis-check 7s forwards;
-    }
-    @keyframes vis-check {
-      0%, 44.9% { opacity: 0; }
-      45%, 100% { opacity: 1; }
-    }
-
-    /* 4. Hiệu ứng gõ vế sau (Mở rộng lề trái -10px để hiển thị trọn vẹn chữ I) */
-    .type-rest {
-      clip-path: polygon(-10px -10px, -10px -10px, -10px 100px, -10px 100px);
-      animation: type-rest-anim 7s forwards;
-    }
-    @keyframes type-rest-anim {
-      0%, 50% { clip-path: polygon(-10px -10px, -10px -10px, -10px 100px, -10px 100px); } 
-      85%, 100% { clip-path: polygon(-10px -10px, 900px -10px, 900px 100px, -10px 100px); } 
-    }
+    .text-container { font-family: 'Fira Code', 'Courier New', Courier, monospace; font-size: 24px; font-weight: bold; fill: #a0aec0; }
+    .name { fill: url(#cyber-gradient); }
+    .cursor { fill: #00F0FF; animation: blink 0.8s infinite; }
+    @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+    .type-init { clip-path: polygon(-10px -10px, -10px -10px, -10px 100px, -10px 100px); animation: type-init-anim 7s forwards; }
+    @keyframes type-init-anim { 0% { clip-path: polygon(-10px -10px, -10px -10px, -10px 100px, -10px 100px); } 15%, 100% { clip-path: polygon(-10px -10px, 300px -10px, 300px 100px, -10px 100px); } }
+    .spinner-visibility { opacity: 0; animation: vis-spinner 7s forwards; }
+    @keyframes vis-spinner { 0%, 15% { opacity: 0; } 15.1%, 44.9% { opacity: 1; } 45%, 100% { opacity: 0; } }
+    .spinner-spin { transform-origin: 280px 42px; animation: spin 0.8s linear infinite; }
+    @keyframes spin { 100% { transform: rotate(360deg); } }
+    .check { opacity: 0; fill: #FF9E00; animation: vis-check 7s forwards; }
+    @keyframes vis-check { 0%, 44.9% { opacity: 0; } 45%, 100% { opacity: 1; } }
+    .type-rest { clip-path: polygon(-10px -10px, -10px -10px, -10px 100px, -10px 100px); animation: type-rest-anim 7s forwards; }
+    @keyframes type-rest-anim { 0%, 50% { clip-path: polygon(-10px -10px, -10px -10px, -10px 100px, -10px 100px); } 85%, 100% { clip-path: polygon(-10px -10px, 900px -10px, 900px 100px, -10px 100px); } }
   </style>
 
-  <!-- Đã thay đổi: Dùng các thẻ <text> riêng biệt thay vì <tspan> để clip-path hoạt động chuẩn xác -->
-  
-  <!-- Phần 1: Gõ lệnh init -->
   <text x="20" y="50" class="text-container type-init">> System.init():</text>
-  
-  <!-- Phần 2: Dấu check xanh -->
   <text x="270" y="50" class="text-container check">✔</text>
-  
-  <!-- Phần 3: Gõ nốt phần còn lại -->
   <text x="300" y="50" class="text-container type-rest">I'm Phúc, you can call me [<tspan class="name">noName25</tspan>]<tspan class="cursor">_</tspan></text>
 
-  <!-- Phần 4: Vòng loading xoay tròn -->
   <g class="spinner-visibility">
     <g class="spinner-spin">
-      <circle cx="280" cy="42" r="8" fill="none" stroke="#c9d1d9" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="30" stroke-dashoffset="15" />
+      <circle cx="280" cy="42" r="8" fill="none" stroke="#00F0FF" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="30" stroke-dashoffset="15" />
     </g>
   </g>
 </svg>
