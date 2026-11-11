@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 60" width="600" height="60">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 60" width="100%" height="60">
   <defs>
     <!-- Khai báo dải màu cam gradient -->
     <linearGradient id="orange-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -8,20 +8,18 @@
   </defs>
   
   <style>
-    /* Font chữ và màu sắc cơ bản (màu xám sáng của GitHub Dark Mode) */
+    /* Font chữ và màu sắc cơ bản */
     .text-container {
       font-family: 'Fira Code', 'Courier New', Courier, monospace;
-      font-size: 26px;
+      font-size: 24px;
       font-weight: bold;
       fill: #c9d1d9; 
     }
     
     /* Gán màu gradient cho biệt danh */
-    .name {
-      fill: url(#orange-gradient);
-    }
+    .name { fill: url(#orange-gradient); }
     
-    /* Hiệu ứng nhấp nháy cho con trỏ (dấu nháy) */
+    /* Hiệu ứng nhấp nháy cho con trỏ */
     .cursor {
       fill: #c9d1d9;
       animation: blink 0.8s infinite;
@@ -31,22 +29,72 @@
       50% { opacity: 0; }
     }
 
-    /* Hiệu ứng quét từ trái sang phải để giả lập gõ phím */
-    .typing {
-      animation: typing-effect 2.5s steps(40, end) forwards;
-      white-space: nowrap;
-      overflow: hidden;
+    /* 1. Hiệu ứng gõ chữ System.init (Từ 0s đến 1s) */
+    .type-init {
+      clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
+      animation: type-init-anim 7s forwards;
     }
-    @keyframes typing-effect {
-      from { clip-path: polygon(0 0, 0 0, 0 100%, 0 100%); }
-      to { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
+    @keyframes type-init-anim {
+      0% { clip-path: polygon(0 0, 0 0, 0 100%, 0 100%); }
+      15%, 100% { clip-path: polygon(0 0, 260px 0, 260px 100%, 0 100%); }
+    }
+
+    /* 2. Hiển thị vòng xoay loading trong 2 giây (Từ 1s đến 3.15s) */
+    .spinner-visibility {
+      opacity: 0;
+      animation: vis-spinner 7s forwards;
+    }
+    @keyframes vis-spinner {
+      0%, 15% { opacity: 0; }        /* Chờ chữ init gõ xong */
+      15.1%, 44.9% { opacity: 1; }   /* Hiện vòng quay */
+      45%, 100% { opacity: 0; }      /* Ẩn đi khi check xanh xuất hiện */
+    }
+    .spinner-spin {
+      transform-origin: 270px 32px;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { 
+      100% { transform: rotate(360deg); } 
+    }
+
+    /* 3. Dấu check xanh xuất hiện (Tại giây thứ 3.15) */
+    .check {
+      opacity: 0;
+      fill: #4ade80; /* Màu xanh lá hacker */
+      animation: vis-check 7s forwards;
+    }
+    @keyframes vis-check {
+      0%, 44.9% { opacity: 0; }
+      45%, 100% { opacity: 1; }
+    }
+
+    /* 4. Hiệu ứng gõ vế sau (Từ 3.5s đến 6s) */
+    .type-rest {
+      clip-path: polygon(290px 0, 290px 0, 290px 100%, 290px 100%);
+      animation: type-rest-anim 7s forwards;
+    }
+    @keyframes type-rest-anim {
+      0%, 50% { clip-path: polygon(290px 0, 290px 0, 290px 100%, 290px 100%); } /* Tạm dừng chờ loading */
+      85%, 100% { clip-path: polygon(290px 0, 900px 0, 900px 100%, 290px 100%); } /* Chạy chữ */
     }
   </style>
 
-  <!-- Group chứa văn bản áp dụng hiệu ứng -->
-  <g class="typing">
-    <text x="10" y="40" class="text-container">
-      Hi there 👋 I'm <tspan class="name">NoName</tspan><tspan class="cursor">_</tspan>
-    </text>
+  <!-- Group chứa văn bản -->
+  <text y="40" class="text-container">
+    <!-- Phần 1: Gõ lệnh init -->
+    <tspan x="10" class="type-init">> System.init():</tspan>
+    
+    <!-- Phần 2: Dấu check xanh (được neo tọa độ cố định) -->
+    <tspan x="260" class="check">✔</tspan>
+    
+    <!-- Phần 3: Gõ nốt phần còn lại -->
+    <tspan x="290" class="type-rest">I'm Phúc, you can call me [<tspan class="name">noName25</tspan>]<tspan class="cursor">_</tspan></tspan>
+  </text>
+
+  <!-- Phần 4: Vẽ vòng loading xoay tròn bằng đồ họa vector -->
+  <g class="spinner-visibility">
+    <g class="spinner-spin">
+      <circle cx="270" cy="32" r="8" fill="none" stroke="#c9d1d9" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="30" stroke-dashoffset="15" />
+    </g>
   </g>
 </svg>
