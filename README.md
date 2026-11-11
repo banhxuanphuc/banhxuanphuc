@@ -1,13 +1,52 @@
 <div align="center">
+  <a href="https://github.com/banhxuanphuc">
+    <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&pause=1000&color=2496ED&center=true&vCenter=true&width=435&lines=Hi+there+%F0%9F%91%8B+I'm+Phúc;Backend+Developer;Data+Warehouse+Enthusiast" alt="Typing SVG" />
+  </a>
+</div>
 
-## Hi there 👋 I'm Phúc
+<br>
 
-### 🛠️ Tech Stack
+<table width="100%">
+  <tr>
+    <!-- Cột trái: Nơi chứa ASCII Art -->
+    <td width="45%" valign="top">
+<pre><code>
+<!-- BẠN PASTE ẢNH ASCII CỦA BẠN VÀO ĐÂY (Xóa dòng này đi) -->
+</code></pre>
+    </td>
 
-![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
-![PHP](https://img.shields.io/badge/PHP-777BB4?style=for-the-badge&logo=php&logoColor=white)
-![SQL Server](https://img.shields.io/badge/SQL%20Server-CC2927?style=for-the-badge&logoColor=white)
-![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
+<!-- Cột phải: Thông tin cá nhân và Kỹ năng -->
+<td width="55%" valign="top">
+  <h3>Terminal._</h3>
+  <hr>
+  <ul>
+    <li><b>Education:</b> University of Information Technology (UIT), VNU-HCM</li>
+    <li><b>Major:</b> Information Systems (3rd-year)</li>
+    <li><b>Focus:</b> Backend Development, Data Warehousing, BPM</li>
+    <li><b>Contact:</b> phuc2006aka@gmail.com</li>
+  </ul>
+
+  <h3>🛠️ Tech Stack</h3>
+  <hr>
+  <p>
+    <!-- Ngôn ngữ -->
+    <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python"/>
+    <img src="https://img.shields.io/badge/PHP-777BB4?style=for-the-badge&logo=php&logoColor=white" alt="PHP"/>
+    <img src="https://img.shields.io/badge/SQL%20Server-CC2927?style=for-the-badge&logoColor=white" alt="SQL Server"/>
+    <img src="https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=java&logoColor=white" alt="Java"/>
+    <br>
+    <!-- Framework & Tools -->
+    <img src="https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white" alt="Laravel"/>
+    <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white" alt="Docker"/>
+    <img src="https://img.shields.io/badge/PowerBI-F2C811?style=for-the-badge&logo=Power%20BI&logoColor=black" alt="Power BI"/>
+  </p>
+</td>
+  </tr>
+</table>
+
+<br>
+
+<div align="center">
 
 ### 🟩 Contribution Graph
 
@@ -17,6 +56,8 @@
   <img alt="contribution graph" src="https://raw.githubusercontent.com/banhxuanphuc/banhxuanphuc/output/github-snake-dark.svg" />
 </picture>
 
+<br><br>
+
 ### 📊 GitHub Stats
 
 <img height="165" src="https://github-readme-stats.vercel.app/api?username=banhxuanphuc&show_icons=true&theme=github_dark&hide_border=true" />
@@ -24,64 +65,8 @@
 
 </div>
 
-<pre><code>
-                                                                                                    
-                                                                                                    
-                               ...                                                                  
-                          ....:::~77~:              .:::~~                                          
-                     ..::..:^7?5PPJ?J?J!.          ...:JJ?Y.   ...                                  
-               .^7Y5B#BP5J!!P&@@&&&@@&BB5....::::::^:..~B&&G5PG5PP5Y~.                              
-           ..^JGB&@&PG#@@@@&@@@@@@@@@@@B?^^^^^^^!5#&&&#G&@@@@&BG?^~?BB~:                            
-        .^~?B&&#&@@@&@@@@@@@@@@@@@@@@&?::::::::J#@@@@@@@@@@@@@@@@&GJ7B#!^                           
-      .7JPB&@&@@@@@@@@@@@@@@@@@@@@@@B^.......:5&@@@@@@@@@@@@@@@@@@@&#P&G7:                          
-     7#BG&#5B&@@@@@@@@@@@@@@@@@@@@@G........:5@@@@@@@@@@@@@@@@@@@@@@@@@@&&BY!^.                     
-   ^G#?^???G@@@@@@@@@@@@@@@@@@@@@@G........:Y@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#G?J7                    
-  ^BG. Y5#@@@@@@@@@@@@@@@@@@@@@@@#.........?&@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&P#PY?7~^:.            
- .5B..5GB@@@@@@@@@@@@@@@@@@@@@@@@^........!#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&&BY!^~.          
- :GJ.^BB@@@@@@@@@@@@@@@@@@@@@@@@J........^P@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&Y77~         
- ^5J.5@@@@@@@@@@@@@@@@@@@@@@@@@#.........Y@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&Y7!~        
- .J7#@@@@@@@@@@@@@@@@@@@@@@@@@@J::^::...~#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&@PY!        
- .5G@@@@@@@@@@@@@@@@@@@@@@@@@@@@PJJ?~:B&&@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&&PPJ        
- .JB@&@@@@@@@@@@@@@@@@@@@@@@@@@&?7!^ ~@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#!!P        
- ^.G&#@@@@@@@@@@@@@@@@@@@@@@@@@5?7~. #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&B!.J        
- .:5&@@@@@@@@@@@@@@@@@@@@@@@@@&GBG57J&&&@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&75^!.        
-   ~&@@@@@@@@@@@@@@@@@@@@@@&B55BG5!.55JJJ5PB&@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#B!J^:         
-   !#@@@@@@@@@@@@@@@@@@@@BJ?JJJY?7~~J7~::^!7?5#@@@@@@@@@@&&&#&@##&#&@@@@@@@@@@@@@@@@B?#5:           
-   ^G&@@@@@@@@@@@@@@@@@&7??!^::......:~~. .^!!7Y&@@@@@@@#JJJJYY?JJG&&@@@@@&@@@@@@@@@GPY             
-    ~B@@@@@@@@@@@@@@@@&!?~:::::::.......~:  .!~!?#@@@@@&P~^^^::^^~!?YPB##G#&@@@@@@@5?~              
-     7@@@@@@@@@@@@@@@@J~::::::::::...... ^:  :!~!7#@@&&&5~^:::::::^^~!7J5PBB&@&#555:.               
-     .5@@@@@@@@@@@@@@@7::::::::::::...... ~:  ^!~!?&@&BG?~^^::::::^^~7YPGG#&#7^^..                  
-      .B@@@@@@@@@@@@@@Y.:::~77777?!~7:.....~...!~~!B@@&G7~^^:::::::^~~!!7?5Y.                       
-       ^#@@@@@@@@@@@@@#.:::^~7JJY7~J~:.... ... .!~!?PG#&&G?~:::...:::^^^~!!~:                       
-        ~&@@@@@@@@@@@@@7.::::::!~:!^:::....    .!~!7Y?7?YB&&G7~??7!~^^^::^^~?BGJ~                   
-         J@@@@@@@@@@@@@&::::::::::::::::::..   .~!!7Y?77!!7JB@@@@@@@@&&&#BBB&@@@@&7                 
-         .G@@@@@@@@@@@@@P.::::::::::^:::::::....!77JY7777!!~!@@@@@@@@@@@@@@@@@@@@@@&?               
-          ~&@@@@@@@@@@@@@G:::::::^^^^^^^^^~^:::^J?J5J77777!!!B@@@@@&&@@@@@@@@@@@@@@@@&?             
-           ?@@@@@@@@@@@@@@&?^^^^^^^^^^^^~7!~~~!YY5PY777777!!!!?B@@@@@@@@@@@@@@@@@@@@@@@&.           
-           .#@@@@@@@@@@@@@@@#Y7!~~~~~!7JYJ???YPGBGY??77!!!!!!~~~~Y&@@@@@@@@@@@@@@@@@@@@@G           
-            J@@@@@@@@@@@@@@&&##BGP55PPPPPPGB###&@&BY?77777!!!!~~~^^J&@@@@@@@@@@@@@@@@@@@@.          
-            .&@@@@@@@@@@@@&#BGBB##&&&&&&&&&&#BGGG#@@&GJ777!!!!~~~~~^?@@@@@@@@@@@@@@@@@@@@^          
-             J@@@@@@@@@@@&BGPPPPPGGGGGGP55PGGPPP555PB&@&P??YYJJ????J#@@@@@@@@@@@@@@@@@@@@:          
-              #@@@@@@@@&#GGPPP555YYJ?7!!!7?YPPP555YJ??YB&@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&           
-              ^@@@@@&#BGGPPP555YYJJ?7!~~~~7?Y5PPP55YYJJ?#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@?           
-               !#&#BBGGGPPP555YYJJ??7!~~~~!7?Y5PPP5555YY&@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@B            
-                ~YPGGGGPPPP55YYJJ??77!~~~~~!7JY555555555G#@@@@@@@@@@@@@@@@@@@@@@@@@@@@#.            
-                :YPGGGGPPP55YYJJ??77!!~~~~~!77JJYYY555PPPPGB&@@@@@@@@@@@@@@@@@@@@@@@@B              
-               .?PPGGGPPPP5YYJJ???77!!~~~~~~!7?JJJYYY55PPPGGGG#&@@@@@@@@@@@@@@@@@@@&7               
-               75PPGGPPP555YJJ????77!!~~~~~!!77??JJJJYYY5PPGGGBB#&@@@@@@@@@@@@@@@&5.                
-             .?55PPPPP55YYYJJJ??777!!!~~~~~~!!77??JJJJJY5PGGP5YY5PB&@@@@@@@@@@@#7                   
-            ^J55PPP555YYJJJ????7777!!!~~~~~~~!777??JJJJJY5~.      .J#@@@@@&#5!.                     
-          .7Y55555YYJJ??????7777777!!!~~~~~~~!!77???J?J?7.           .....                          
-        .!JJYYYJJJ??77777777777777!!!~~~~~~~~!!!77??JJJ7.                                           
-      :!??????77777!!!!!!!!!7!777!!!!~~~~~~~~!!7777?JJ^                                             
-^::^~!!!!!!!!!~~~~~~~~~~~~!!!!77!!~~~~~~~~~!!!7777??^                                               
-@@@@@&&#G5J7~^^^^^^^^^^~~~~~~!!!~~~~~~~~~~~!!!77?J?.                                                
-@@@@@@@@@@@@&B57^::::^^^^^^~~~~~~~~~~~~~~~!!!!77?7                                                  
-@@@@@@@@@@@@@@@@@#P?~:::::^^^^^^^^~~~~~~!!!!!!7?!                                                   
-@@@@@@@@@@@@@@@@@@@@@#P?~^:::::^^~~~~!!!!!!!!777                                                    
-@@@@@@@@@@@@@@@@@@@@@@@@@&BY!^::^^^~~!!!!!!!!7!:                                                    
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&#P?!^^~~~~!!~~~!~P?.                                                  
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#P?~^~~~~^^~~&@@#?.                                               
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&BY!~^^:^~7P&@@@#5~.                                           
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@BJ~^^~~~~J&@@@@&G7:                                        
-</code></pre>
+<br>
+
+### 🚀 Projects
+
+*📌 Các dự án nổi bật sẽ được ghim trực tiếp thông qua tính năng "Customize your pins" trên trang cá nhân GitHub.*
