@@ -1,63 +1,76 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 696 640" width="696" height="640" role="img" aria-label="About Phúc (noName25): Information Systems student at UIT, VNU-HCM. Focus: Backend, Data Warehousing, BPM.">
-<title>DOSSIER // noName25</title>
-<defs>
-  <linearGradient id="frame" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#00F0FF"/><stop offset=".55" stop-color="#2D7CFF"/><stop offset="1" stop-color="#FF9E00"/></linearGradient>
-  <linearGradient id="g" gradientUnits="userSpaceOnUse" x1="26" y1="0" x2="356" y2="0"><stop offset="0" stop-color="#00F0FF"/><stop offset=".5" stop-color="#5AA9FF"/><stop offset="1" stop-color="#FF9E00"/></linearGradient>
-  <pattern id="crt" width="4" height="3" patternUnits="userSpaceOnUse"><rect width="4" height="1" fill="#000" opacity=".3"/></pattern>
-  <pattern id="dots" width="22" height="22" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="#00F0FF" opacity=".12"/></pattern>
-</defs>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 696 640" width="696" height="640" role="img" aria-label="Dossier - Phúc a.k.a noName25. Information Systems, UIT VNU-HCM. Focus: Backend, Data Warehousing, BPM. Exploring ML, Deep Learning, TensorFlow, Kaggle.">
+<title>DOSSIER // Phúc a.k.a noName25</title>
+<defs><linearGradient id="frame" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#00E5FF"/><stop offset="1" stop-color="#3D8BFF"/></linearGradient>
+  <pattern id="crt" width="4" height="3" patternUnits="userSpaceOnUse"><rect width="4" height="1" fill="#000" opacity=".22"/></pattern></defs>
 <style>
-  .mono{font-family:'Cascadia Mono',Consolas,'SFMono-Regular',Menlo,'Courier New',monospace}
-  text{white-space:pre}
-  .body text{clip-path:inset(0 100% 0 0)}
-  @keyframes type{to{clip-path:inset(0 0 0 0)}}
-  .cur{opacity:0;animation:show 0s 6.94s forwards, blink 1s steps(1) 6.94s infinite}
-  @keyframes show{to{opacity:1}} @keyframes blink{50%{opacity:0}}
+  .mono{font-family:'Cascadia Mono','Cascadia Code',Consolas,'SFMono-Regular',Menlo,'Courier New',monospace}
   .blink{animation:blink 1s steps(1) infinite}
-  .bar{transform-box:fill-box;transform-origin:left;transform:scaleX(0);animation:bar 7.09s cubic-bezier(.6,.1,.3,1) .4s forwards}
-  @keyframes bar{to{transform:scaleX(1)}}
-  .pct{opacity:0;animation:show .2s 7.49s forwards}
-  .sweep{animation:sweep 6s linear 7.09s infinite;opacity:0}
-  @keyframes sweep{0%{opacity:1;transform:translateY(-80px)}100%{opacity:1;transform:translateY(640px)}}
+  @keyframes blink{50%{opacity:0}}
+  @keyframes show{to{opacity:1}}
+  @keyframes hide{to{opacity:0}}
+  .nf{animation:nfout .7s steps(1) 9.00s forwards}
+  @keyframes nfout{0%{opacity:1}20%{opacity:0}35%{opacity:1}55%{opacity:0}75%{opacity:.5}88%,100%{opacity:0}}
+  .nfa{opacity:0;animation:nfa 2.3s steps(1) infinite}
+  .nfb{opacity:0;animation:nfb 2.3s steps(1) .4s infinite}
+  @keyframes nfa{0%,100%{opacity:0}70%{opacity:.5;transform:translate(-7px,0);clip-path:inset(18% 0 52% 0)}74%{opacity:.5;transform:translate(5px,0);clip-path:inset(58% 0 12% 0)}78%{opacity:0}}
+  @keyframes nfb{0%,100%{opacity:0}60%{opacity:.45;transform:translate(6px,0);clip-path:inset(40% 0 35% 0)}64%{opacity:.45;transform:translate(-4px,0);clip-path:inset(8% 0 72% 0)}68%{opacity:0}}
+  .content{opacity:0;animation:cin .8s steps(1) 9.45s forwards}
+  @keyframes cin{0%{opacity:0}15%{opacity:.7}30%{opacity:0}50%{opacity:1}65%{opacity:.35}82%,100%{opacity:1}}
+  text{white-space:pre}
+  .in{opacity:0;animation:in .45s ease-out forwards}
+  @keyframes in{from{opacity:0;transform:translateX(-8px)}to{opacity:1;transform:none}}
+  .egg{opacity:0;animation:egg 1.2s ease-out 10.80s forwards}
+  @keyframes egg{to{opacity:.55}}
+  .spin{transform-box:fill-box;transform-origin:center;animation:rot 28s linear infinite}
+  @keyframes rot{to{transform:rotate(360deg)}}
+  .glow{transform-box:fill-box;transform-origin:center;animation:glow 4s ease-in-out infinite}
+  @keyframes glow{50%{opacity:.35;transform:scale(1.15)}}
 </style>
 
-<path d="M16 1 H666 L695 30 V624 L680 639 H30 L1 610 V16 Z" fill="#05070D" stroke="url(#frame)" stroke-width="1.5"/>
-<rect x="2" y="47" width="692" height="540" fill="url(#dots)"/>
-<path d="M1 46 H695" stroke="#00F0FF" stroke-opacity=".25"/>
-<path d="M1 588 H695" stroke="#00F0FF" stroke-opacity=".25"/>
-<rect x="2" y="0" width="692" height="80" fill="#00F0FF" fill-opacity=".04" class="sweep"/>
-
-<g class="mono" font-size="12" letter-spacing="1.5">
-  <rect x="18" y="16" width="8" height="14" fill="#FF9E00"/>
-  <text x="34" y="28" fill="#00F0FF">DOSSIER // noName25.yml</text>
-  <text x="656" y="28" fill="#FF9E00" text-anchor="end">SECURE LINK</text>
-  <circle cx="668" cy="24" r="4" fill="#00F0FF" class="blink"/>
+<rect x=".75" y=".75" width="694.5" height="638.5" rx="12" fill="#0d1117" stroke="url(#frame)" stroke-width="1.3" stroke-opacity=".8"/>
+<g class="nf" font-family="'Cascadia Mono','Cascadia Code',Consolas,'SFMono-Regular',Menlo,'Courier New',monospace" text-anchor="middle">
+  <g opacity=".2" fill="#7DD3FC">
+    <text x="348.0" y="252" font-size="18" letter-spacing="5">ERROR</text>
+    <text x="348.0" y="357" font-size="110" font-weight="700" textLength="264" lengthAdjust="spacingAndGlyphs">404</text>
+    <text x="348.0" y="401" font-size="18" letter-spacing="5">PAGE NOT FOUND</text>
+    <rect x="130" y="274" width="39" height="2" fill="#7DD3FC"/><rect x="520" y="288" width="25" height="2" fill="#00E5FF"/><rect x="153" y="322" width="21" height="2" fill="#3D8BFF"/><rect x="495" y="331" width="46" height="2" fill="#7DD3FC"/><rect x="188" y="348" width="30" height="2" fill="#00E5FF"/><rect x="543" y="313" width="16" height="2" fill="#3D8BFF"/>
+  </g>
+  <text x="348.0" y="357" font-size="110" font-weight="700" textLength="264" lengthAdjust="spacingAndGlyphs" fill="#00E5FF" class="nfa">404</text>
+  <text x="348.0" y="357" font-size="110" font-weight="700" textLength="264" lengthAdjust="spacingAndGlyphs" fill="#3D8BFF" class="nfb">404</text>
 </g>
-
-<g class="mono body">
-    <text x="26" y="88" font-size="15" textLength="261.0" lengthAdjust="spacingAndGlyphs" style="animation:type 0.64s steps(29) 0.50s forwards"><tspan fill="#00F0FF">noName25</tspan><tspan fill="#6B7A90">@</tspan><tspan fill="#FF9E00">neo-saigon</tspan><tspan fill="#6B7A90">:~$ </tspan><tspan fill="#C9D4E3">whoami</tspan></text>
-  <text x="26" y="120" font-size="22" font-weight="700" textLength="303.6" lengthAdjust="spacingAndGlyphs" style="animation:type 0.25s steps(5) 1.29s forwards"><tspan fill="url(#g)">Phúc</tspan><tspan fill="#6B7A90">  ·  a.k.a </tspan><tspan fill="url(#g)">noName25</tspan></text>
-  <text x="26" y="148" font-size="15" textLength="405.0" lengthAdjust="spacingAndGlyphs" style="animation:type 0.25s steps(11) 1.59s forwards"><tspan fill="#C9D4E3">Information Systems undergrad @ UIT · VNU-HCM</tspan></text>
-  <text x="26" y="194" font-size="15" textLength="342.0" lengthAdjust="spacingAndGlyphs" style="animation:type 0.84s steps(38) 1.89s forwards"><tspan fill="#00F0FF">noName25</tspan><tspan fill="#6B7A90">@</tspan><tspan fill="#FF9E00">neo-saigon</tspan><tspan fill="#6B7A90">:~$ </tspan><tspan fill="#C9D4E3">cat profile.yml</tspan></text>
-  <text x="26" y="222" font-size="15" textLength="504.0" lengthAdjust="spacingAndGlyphs" style="animation:type 0.28s steps(14) 2.87s forwards"><tspan fill="#2D7CFF">  education </tspan><tspan fill="#6B7A90">: </tspan><tspan fill="#C9D4E3">UIT · University of Information Technology</tspan></text>
-  <text x="26" y="250" font-size="15" textLength="396.0" lengthAdjust="spacingAndGlyphs" style="animation:type 0.25s steps(11) 3.20s forwards"><tspan fill="#2D7CFF">  major     </tspan><tspan fill="#6B7A90">: </tspan><tspan fill="#C9D4E3">Information Systems</tspan><tspan fill="#6B7A90"> · </tspan><tspan fill="#FF9E00">3rd-year</tspan></text>
-  <text x="26" y="278" font-size="15" textLength="414.0" lengthAdjust="spacingAndGlyphs" style="animation:type 0.25s steps(11) 3.50s forwards"><tspan fill="#2D7CFF">  focus     </tspan><tspan fill="#6B7A90">: </tspan><tspan fill="#00F0FF">Backend</tspan><tspan fill="#6B7A90"> · </tspan><tspan fill="#00F0FF">Data Warehousing</tspan><tspan fill="#6B7A90"> · </tspan><tspan fill="#00F0FF">BPM</tspan></text>
-  <text x="26" y="306" font-size="15" textLength="486.0" lengthAdjust="spacingAndGlyphs" style="animation:type 0.27s steps(13) 3.80s forwards"><tspan fill="#2D7CFF">  exploring </tspan><tspan fill="#6B7A90">: </tspan><tspan fill="#FF9E00">ML</tspan><tspan fill="#6B7A90"> · </tspan><tspan fill="#FF9E00">Deep Learning</tspan><tspan fill="#6B7A90"> · </tspan><tspan fill="#FF9E00">TensorFlow</tspan><tspan fill="#6B7A90"> · </tspan><tspan fill="#FF9E00">Kaggle</tspan></text>
-  <text x="26" y="334" font-size="15" textLength="504.0" lengthAdjust="spacingAndGlyphs" style="animation:type 0.28s steps(14) 4.12s forwards"><tspan fill="#2D7CFF">  stack     </tspan><tspan fill="#6B7A90">: </tspan><tspan fill="#C9D4E3">Python · PHP/Laravel · SQL Server · Docker</tspan></text>
-  <text x="26" y="362" font-size="15" textLength="315.0" lengthAdjust="spacingAndGlyphs" style="animation:type 0.25s steps(8) 4.45s forwards"><tspan fill="#2D7CFF">  contact   </tspan><tspan fill="#6B7A90">: </tspan><tspan fill="#00F0FF">phuc2006aka@gmail.com</tspan></text>
-  <text x="26" y="408" font-size="15" textLength="360.0" lengthAdjust="spacingAndGlyphs" style="animation:type 0.88s steps(40) 4.75s forwards"><tspan fill="#00F0FF">noName25</tspan><tspan fill="#6B7A90">@</tspan><tspan fill="#FF9E00">neo-saigon</tspan><tspan fill="#6B7A90">:~$ </tspan><tspan fill="#C9D4E3">./quests --active</tspan></text>
-  <text x="26" y="436" font-size="15" textLength="477.0" lengthAdjust="spacingAndGlyphs" style="animation:type 0.27s steps(13) 5.78s forwards"><tspan fill="#FF9E00">  ▸ MAIN QUEST </tspan><tspan fill="#6B7A90">: </tspan><tspan fill="#C9D4E3">ship reliable backend &amp; data systems</tspan></text>
-  <text x="26" y="464" font-size="15" textLength="522.0" lengthAdjust="spacingAndGlyphs" style="animation:type 0.29s steps(14) 6.10s forwards"><tspan fill="#00F0FF">  ▸ SIDE QUEST </tspan><tspan fill="#6B7A90">: </tspan><tspan fill="#C9D4E3">level up in ML / DL, one Kaggle at a time</tspan></text>
-  <text x="26" y="510" font-size="15" textLength="207.0" lengthAdjust="spacingAndGlyphs" style="animation:type 0.51s steps(23) 6.44s forwards"><tspan fill="#00F0FF">noName25</tspan><tspan fill="#6B7A90">@</tspan><tspan fill="#FF9E00">neo-saigon</tspan><tspan fill="#6B7A90">:~$ </tspan></text>
+<g class="content">
+  <g font-family="'Cascadia Mono','Cascadia Code',Consolas,'SFMono-Regular',Menlo,'Courier New',monospace" font-size="12" letter-spacing="1.5">
+  <rect x="18" y="17" width="3" height="13" rx="1.5" fill="#00E5FF"/>
+  <text x="30" y="28" fill="#00E5FF">DOSSIER</text>
+  <text x="660" y="28" fill="#6B7A90" text-anchor="end"></text>
+  <circle cx="672" cy="24" r="3.5" fill="#00E5FF" class="blink"/>
 </g>
-<rect x="235.0" y="497" width="9" height="17" fill="#00F0FF" class="cur"/>
-
-<g class="mono" font-size="12" letter-spacing="1.5">
-  <text x="20" y="610" fill="#6B7A90">LOC <tspan fill="#C9D4E3">HCMC, VN</tspan>  ·  TZ <tspan fill="#C9D4E3">UTC+7</tspan></text>
-  <text x="460" y="610" fill="#6B7A90" text-anchor="end">SYNC</text>
-  <rect x="470" y="600" width="160" height="12" fill="none" stroke="#00F0FF" stroke-opacity=".5"/>
-  <rect x="472" y="602" width="156" height="8" fill="url(#frame)" class="bar"/>
-  <text x="676" y="610" fill="#FF9E00" text-anchor="end" class="pct">100%</text>
+<path d="M1 44 H695" stroke="#00E5FF" stroke-opacity=".16"/>
+  <g class="egg">
+    <circle cx="592" cy="122" r="40" fill="#7DD3FC" opacity=".08" class="glow"/>
+    <g class="spin"><path transform="translate(564 94) scale(2.333)" fill="#7DD3FC" d="m4.7144 15.9555 4.7174-2.6471.079-.2307-.079-.1275h-.2307l-.7893-.0486-2.6956-.0729-2.3375-.0971-2.2646-.1214-.5707-.1215-.5343-.7042.0546-.3522.4797-.3218.686.0608 1.5179.1032 2.2767.1578 1.6514.0972 2.4468.255h.3886l.0546-.1579-.1336-.0971-.1032-.0972L6.973 9.8356l-2.55-1.6879-1.3356-.9714-.7225-.4918-.3643-.4614-.1578-1.0078.6557-.7225.8803.0607.2246.0607.8925.686 1.9064 1.4754 2.4893 1.8336.3643.3035.1457-.1032.0182-.0728-.164-.2733-1.3539-2.4467-1.445-2.4893-.6435-1.032-.17-.6194c-.0607-.255-.1032-.4674-.1032-.7285L6.287.1335 6.6997 0l.9957.1336.419.3642.6192 1.4147 1.0018 2.2282 1.5543 3.0296.4553.8985.2429.8318.091.255h.1579v-.1457l.1275-1.706.2368-2.0947.2307-2.6957.0789-.7589.3764-.9107.7468-.4918.5828.2793.4797.686-.0668.4433-.2853 1.8517-.5586 2.9021-.3643 1.9429h.2125l.2429-.2429.9835-1.3053 1.6514-2.0643.7286-.8196.85-.9046.5464-.4311h1.0321l.759 1.1293-.34 1.1657-1.0625 1.3478-.8804 1.1414-1.2628 1.7-.7893 1.36.0729.1093.1882-.0183 2.8535-.607 1.5421-.2794 1.8396-.3157.8318.3886.091.3946-.3278.8075-1.967.4857-2.3072.4614-3.4364.8136-.0425.0304.0486.0607 1.5482.1457.6618.0364h1.621l3.0175.2247.7892.522.4736.6376-.079.4857-1.2142.6193-1.6393-.3886-3.825-.9107-1.3113-.3279h-.1822v.1093l1.0929 1.0686 2.0035 1.8092 2.5075 2.3314.1275.5768-.3218.4554-.34-.0486-2.2039-1.6575-.85-.7468-1.9246-1.621h-.1275v.17l.4432.6496 2.3436 3.5214.1214 1.0807-.17.3521-.6071.2125-.6679-.1214-1.3721-1.9246L14.38 17.959l-1.1414-1.9428-.1397.079-.674 7.2552-.3156.3703-.7286.2793-.6071-.4614-.3218-.7468.3218-1.4753.3886-1.9246.3157-1.53.2853-1.9004.17-.6314-.0121-.0425-.1397.0182-1.4328 1.9672-2.1796 2.9446-1.7243 1.8456-.4128.164-.7164-.3704.0667-.6618.4008-.5889 2.386-3.0357 1.4389-1.882.929-1.0868-.0062-.1579h-.0546l-6.3385 4.1164-1.1293.1457-.4857-.4554.0608-.7467.2307-.2429 1.9064-1.3114Z"/></g>
+  </g>
+  <g font-family="'Cascadia Mono','Cascadia Code',Consolas,'SFMono-Regular',Menlo,'Courier New',monospace">
+    <text x="28" y="106" font-size="36" textLength="86.4" lengthAdjust="spacingAndGlyphs" font-weight="700" class="in" style="animation-delay:9.60s"><tspan fill="#C9D4E3">Phúc</tspan></text>
+    <text x="28" y="140" font-size="18" textLength="151.2" lengthAdjust="spacingAndGlyphs" font-weight="600" class="in" style="animation-delay:9.68s"><tspan fill="#6B7A90">a.k.a </tspan><tspan fill="#FF9E00">noName25</tspan></text>
+    <text x="28" y="170" font-size="14" textLength="378.0" lengthAdjust="spacingAndGlyphs" class="in" style="animation-delay:9.76s"><tspan fill="#6B7A90">Information Systems undergrad @ UIT · VNU-HCM</tspan></text>
+    <text x="28" y="240" font-size="11.5" letter-spacing="2" fill="#00E5FF" fill-opacity=".8" class="in" style="animation-delay:9.90s">EDUCATION</text>
+    <text x="170" y="240" font-size="15.5" textLength="474.3" lengthAdjust="spacingAndGlyphs" class="in" style="animation-delay:9.90s"><tspan fill="#C9D4E3">University of Information Technology (UIT), VNU-HCM</tspan></text>
+    <text x="28" y="280" font-size="11.5" letter-spacing="2" fill="#00E5FF" fill-opacity=".8" class="in" style="animation-delay:9.98s">MAJOR</text>
+    <text x="170" y="280" font-size="15.5" textLength="279.0" lengthAdjust="spacingAndGlyphs" class="in" style="animation-delay:9.98s"><tspan fill="#C9D4E3">Information Systems</tspan><tspan fill="#6B7A90"> · </tspan><tspan fill="#C9D4E3">3rd-year</tspan></text>
+    <text x="28" y="320" font-size="11.5" letter-spacing="2" fill="#00E5FF" fill-opacity=".8" class="in" style="animation-delay:10.06s">FOCUS</text>
+    <text x="170" y="320" font-size="15.5" textLength="297.6" lengthAdjust="spacingAndGlyphs" class="in" style="animation-delay:10.06s"><tspan fill="#C9D4E3">Backend</tspan><tspan fill="#6B7A90"> · </tspan><tspan fill="#C9D4E3">Data Warehousing</tspan><tspan fill="#6B7A90"> · </tspan><tspan fill="#C9D4E3">BPM</tspan></text>
+    <text x="28" y="360" font-size="11.5" letter-spacing="2" fill="#00E5FF" fill-opacity=".8" class="in" style="animation-delay:10.14s">EXPLORING</text>
+    <text x="170" y="360" font-size="15.5" textLength="372.0" lengthAdjust="spacingAndGlyphs" class="in" style="animation-delay:10.14s"><tspan fill="#C9D4E3">ML</tspan><tspan fill="#6B7A90"> · </tspan><tspan fill="#C9D4E3">Deep Learning</tspan><tspan fill="#6B7A90"> · </tspan><tspan fill="#C9D4E3">TensorFlow</tspan><tspan fill="#6B7A90"> · </tspan><tspan fill="#C9D4E3">Kaggle</tspan></text>
+    <text x="28" y="400" font-size="11.5" letter-spacing="2" fill="#00E5FF" fill-opacity=".8" class="in" style="animation-delay:10.22s">STACK</text>
+    <text x="170" y="400" font-size="15.5" textLength="390.6" lengthAdjust="spacingAndGlyphs" class="in" style="animation-delay:10.22s"><tspan fill="#C9D4E3">Python</tspan><tspan fill="#6B7A90"> · </tspan><tspan fill="#C9D4E3">PHP/Laravel</tspan><tspan fill="#6B7A90"> · </tspan><tspan fill="#C9D4E3">SQL Server</tspan><tspan fill="#6B7A90"> · </tspan><tspan fill="#C9D4E3">Docker</tspan></text>
+    <text x="28" y="440" font-size="11.5" letter-spacing="2" fill="#00E5FF" fill-opacity=".8" class="in" style="animation-delay:10.30s">CONTACT</text>
+    <text x="170" y="440" font-size="15.5" textLength="195.3" lengthAdjust="spacingAndGlyphs" class="in" style="animation-delay:10.30s"><tspan fill="#00E5FF">phuc2006aka@gmail.com</tspan></text>
+    <text x="28" y="514" font-size="11.5" letter-spacing="2" fill="#00E5FF" fill-opacity=".8" class="in" style="animation-delay:10.50s">NOW</text>
+    <text x="170" y="514" font-size="15.5" textLength="306.9" lengthAdjust="spacingAndGlyphs" class="in" style="animation-delay:10.55s"><tspan fill="#00E5FF">▸ </tspan><tspan fill="#C9D4E3">building backend &amp; data systems</tspan></text>
+    <text x="170" y="548" font-size="15.5" textLength="325.5" lengthAdjust="spacingAndGlyphs" class="in" style="animation-delay:10.63s"><tspan fill="#00E5FF">▸ </tspan><tspan fill="#C9D4E3">levelling up in ML / DL on Kaggle</tspan></text>
+  </g>
+  <path d="M28 200 H668" stroke="#00E5FF" stroke-opacity=".14"/>
+  <path d="M28 474 H668" stroke="#00E5FF" stroke-opacity=".14"/>
 </g>
-<rect x="2" y="47" width="692" height="540" fill="url(#crt)"/>
 </svg>

@@ -8,6 +8,7 @@ on:
     branches: [main]
     paths:
       - scripts/build_stats.py
+      - scripts/theme.py
       - .github/workflows/profile-stats.yml
 
 permissions:

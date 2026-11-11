@@ -1,35 +1,39 @@
 #!/usr/bin/env python3
 """
-Build assets/skills.svg - the "CYBERWARE // INSTALLED MODULES" tech-stack panel.
+Build assets/skills.svg - "INSTALLED MODULES": brand-coloured badges with a
+cyberpunk chromatic-aberration / noise treatment.
 
-Edit the MODULES list below, then run (needs internet once to fetch logos):
+Edit MODULES, then (needs internet once for the logos):
     python scripts/build_skills.py
 
-Logos come from Simple Icons (CC0). Brands that Simple Icons no longer ships
-(e.g. Microsoft SQL Server, Power BI) and concepts (ML, DL, BPM...) use the
-hand-drawn line glyphs in GLYPHS.
+Logos: Simple Icons (CC0). Brands it no longer ships (SQL Server, Power BI)
+and concepts (ML, DL, BPM, DWH) use the line glyphs in GLYPHS.
 """
 from __future__ import annotations
 
+import functools
 import html
-import re
-import urllib.request
+import random
 from pathlib import Path
 
-CY, BL, OR, TX, DIM = "#00F0FF", "#5AA9FF", "#FF9E00", "#C9D4E3", "#6B7A90"
-MONO = "'Cascadia Mono',Consolas,'SFMono-Regular',Menlo,'Courier New',monospace"
-SI_URL = "https://cdn.jsdelivr.net/npm/simple-icons@13.21.0/icons/{}.svg"
+from theme import CY, MONO, OR, T_READY, TX, base_css, defs, frame
+from theme import fetch_icon as _fetch, loader_css, not_found, title_bar
 
-# (category, accent colour, [(label, simple-icons slug OR "glyph:<name>"), ...])
+MAGENTA, ICE = "#FF2A6D", "#00E5FF"     # aberration colours
+
+# (category, [(label, icon, brand colour)])  icon = simple-icons slug or "glyph:<name>"
 MODULES = [
-    ("LANGUAGES", CY, [("Python", "python"), ("C++", "cplusplus"), ("Java", "openjdk"), ("PHP", "php")]),
-    ("BACKEND // OPS", BL, [("Laravel", "laravel"), ("Docker", "docker"), ("SQL Server", "glyph:db")]),
-    ("DATA // BI", OR, [("Data Warehousing", "glyph:dwh"), ("Power BI", "glyph:bars"), ("BPM", "glyph:flow")]),
-    ("AI // ML", "url(#frame)", [("Machine Learning", "glyph:ml"), ("Deep Learning", "glyph:dl"),
-                                  ("TensorFlow", "tensorflow"), ("Kaggle", "kaggle"), ("Claude", "claude")]),
+    ("LANGUAGES", [("Python", "python", "#FFD43B"), ("C++", "cplusplus", "#659AD2"),
+                   ("Java", "openjdk", "#F89820"), ("PHP", "php", "#8892BF")]),
+    ("BACKEND // OPS", [("Laravel", "laravel", "#FF2D20"), ("Docker", "docker", "#2496ED"),
+                        ("SQL Server", "glyph:db", "#E8473F")]),
+    ("DATA // BI", [("Data Warehousing", "glyph:dwh", "#05FFA1"), ("Power BI", "glyph:bars", "#F2C811"),
+                    ("BPM", "glyph:flow", "#B967FF")]),
+    ("AI // ML", [("Machine Learning", "glyph:ml", "#FF2A6D"), ("Deep Learning", "glyph:dl", "#A06BFF"),
+                  ("TensorFlow", "tensorflow", "#FF8F00"), ("Kaggle", "kaggle", "#20BEFF"),
+                  ("Claude", "claude", "#D97757")]),
 ]
 
-# 24x24 stroke glyphs
 GLYPHS = {
     "db": '<ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/>',
     "bars": '<path d="M5 21V13M10 21V8M15 21V3M20 21V11" stroke-width="3"/>',
@@ -41,79 +45,90 @@ GLYPHS = {
 }
 
 W = 1000
-ROW_H, TOP, CHIP_H, X_CHIPS, GAP = 56, 70, 38, 232, 12
+ROW_H, TOP, CHIP_H, X_CHIPS, GAP = 58, 72, 38, 220, 10
 FS = 14
 CW = FS * 0.6
 
 
-def fetch_icon(slug: str) -> str:
-    svg = urllib.request.urlopen(SI_URL.format(slug), timeout=20).read().decode()
-    return re.search(r'<path d="([^"]+)"', svg).group(1)
+fetch_icon = functools.lru_cache(maxsize=None)(_fetch)
 
 
-def icon(spec: str, color: str, x: float, y: float) -> str:
-    stroke_col = OR if color.startswith("url") else color
-    tr = f'transform="translate({x:.1f} {y:.1f}) scale(.75)"'
+def icon_markup(spec: str, color: str) -> str:
+    """Icon at the origin (24x24 scaled to 18px)."""
     if spec.startswith("glyph:"):
-        return (f'<g {tr} fill="none" stroke="{stroke_col}" stroke-width="2" '
+        return (f'<g transform="scale(.75)" fill="none" stroke="{color}" stroke-width="2" '
                 f'stroke-linecap="round" stroke-linejoin="round">{GLYPHS[spec[6:]]}</g>')
-    return f'<path {tr} fill="{stroke_col}" d="{fetch_icon(spec)}"/>'
+    return f'<path transform="scale(.75)" fill="{color}" d="{fetch_icon(spec)}"/>'
+
+
+def chip(x: float, y: float, label: str, spec: str, color: str, n: int) -> str:
+    w = 12 + 18 + 8 + len(label) * CW + 12
+    cy = y + CHIP_H / 2
+    ix, iy = x + 12, cy - 9
+    lab = html.escape(label)
+    tl = f'textLength="{len(label) * CW:.1f}" lengthAdjust="spacingAndGlyphs"'
+    rnd = random.Random(label)
+    return f'''<g class="chip" style="animation-delay:{T_READY + .7 + n * .07:.2f}s">
+  <rect x="{x:.1f}" y="{y}" width="{w:.1f}" height="{CHIP_H}" rx="7" fill="{color}" opacity=".2" filter="url(#blur)"/>
+  <rect x="{x:.1f}" y="{y}" width="{w:.1f}" height="{CHIP_H}" rx="7" fill="{color}" fill-opacity=".09" stroke="{color}" stroke-opacity=".85"/>
+  <rect x="{x + 1:.1f}" y="{y + 1}" width="{w - 2:.1f}" height="{CHIP_H - 2}" rx="6" fill="url(#noise)" opacity=".5"/>
+  <g class="gx" style="animation-delay:{T_READY + 2 + rnd.uniform(0, 6):.2f}s;animation-duration:{rnd.uniform(3.5, 7):.2f}s">
+    <g transform="translate({ix - 1.4:.1f} {iy:.1f})" opacity=".7">{icon_markup(spec, MAGENTA)}</g>
+    <g transform="translate({ix + 1.4:.1f} {iy:.1f})" opacity=".55">{icon_markup(spec, ICE)}</g>
+    <g transform="translate({ix:.1f} {iy:.1f})">{icon_markup(spec, color)}</g>
+    <text x="{x + 38 - 1:.1f}" y="{cy + 5:.1f}" font-size="{FS}" fill="{MAGENTA}" opacity=".45" {tl}>{lab}</text>
+    <text x="{x + 38 + 1:.1f}" y="{cy + 5:.1f}" font-size="{FS}" fill="{ICE}" opacity=".35" {tl}>{lab}</text>
+    <text x="{x + 38:.1f}" y="{cy + 5:.1f}" font-size="{FS}" font-weight="600" fill="#E9F1FA" {tl}>{lab}</text>
+  </g>
+</g>''', w
 
 
 def main() -> None:
-    H = TOP + len(MODULES) * ROW_H + 26
-    total = sum(len(m[2]) for m in MODULES)
+    H = TOP + len(MODULES) * ROW_H + 18
+    total = sum(len(m[1]) for m in MODULES)
     parts, n = [], 0
-    for r, (cat, color, items) in enumerate(MODULES):
+    for r, (cat, items) in enumerate(MODULES):
         y = TOP + r * ROW_H
         cy = y + CHIP_H / 2
         parts.append(
-            f'<g class="mono"><text x="28" y="{cy + 8:.1f}" font-size="24" font-weight="700" fill="{OR}">{r + 1:02d}</text>'
-            f'<text x="66" y="{cy + 4:.1f}" font-size="12" letter-spacing="2" fill="{TX}">{html.escape(cat)}</text></g>'
-            f'<path d="M{X_CHIPS - 34} {cy:.1f} H{X_CHIPS - 8}" stroke="{CY}" stroke-opacity=".4" stroke-dasharray="2 3"/>'
-        )
+            f'<g class="in" style="animation-delay:{T_READY + .6 + r * .1:.2f}s">'
+            f'<text x="28" y="{cy + 7:.1f}" font-size="20" font-weight="700" fill="{CY}" fill-opacity=".9">{r + 1:02d}</text>'
+            f'<text x="62" y="{cy + 4:.1f}" font-size="11.5" letter-spacing="2" fill="{TX}">{html.escape(cat)}</text>'
+            f'<path d="M{X_CHIPS - 32} {cy:.1f} H{X_CHIPS - 10}" stroke="{CY}" stroke-opacity=".35" stroke-dasharray="2 3"/></g>')
         x = X_CHIPS
-        for label, spec in items:
-            w = 12 + 18 + 10 + len(label) * CW + 14
-            stroke = color
-            parts.append(
-                f'<g class="chip" style="animation-delay:{0.25 + n * 0.07:.2f}s">'
-                f'<path d="M{x + 8:.1f} {y} H{x + w:.1f} V{y + CHIP_H - 8} L{x + w - 8:.1f} {y + CHIP_H} H{x:.1f} V{y + 8} Z" '
-                f'fill="#0A1020" stroke="{stroke}" stroke-opacity=".75"/>'
-                f'{icon(spec, color, x + 12, cy - 9)}'
-                f'<text class="mono" x="{x + 40:.1f}" y="{cy + 5:.1f}" font-size="{FS}" fill="{TX}" '
-                f'textLength="{len(label) * CW:.1f}" lengthAdjust="spacingAndGlyphs">{html.escape(label)}</text></g>'
-            )
+        for label, spec, color in items:
+            svg, w = chip(x, y, label, spec, color, n)
+            parts.append(svg)
             x += w + GAP
             n += 1
-        parts.append(f'<rect class="scan" x="{X_CHIPS}" y="{y}" width="60" height="{CHIP_H}" fill="url(#scan)" '
-                     f'style="animation-delay:{2 + r * 0.9:.1f}s"/>')
 
-    svg = f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}" role="img" aria-label="Tech stack: {html.escape(", ".join(l for m in MODULES for l, _ in m[2]))}">
-<title>CYBERWARE // INSTALLED MODULES</title>
+    svg = f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}" role="img" aria-label="Installed modules: {html.escape(", ".join(l for _, items in MODULES for l, _, _ in items))}">
+<title>INSTALLED MODULES</title>
 <defs>
-  <linearGradient id="frame" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="{CY}"/><stop offset=".55" stop-color="#2D7CFF"/><stop offset="1" stop-color="{OR}"/></linearGradient>
-  <linearGradient id="scan" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="{CY}" stop-opacity="0"/><stop offset=".5" stop-color="{CY}" stop-opacity=".22"/><stop offset="1" stop-color="{CY}" stop-opacity="0"/></linearGradient>
-  <pattern id="crt" width="4" height="3" patternUnits="userSpaceOnUse"><rect width="4" height="1" fill="#000" opacity=".3"/></pattern>
+  {defs()}
+  <filter id="blur" x="-20%" y="-60%" width="140%" height="220%"><feGaussianBlur stdDeviation="6"/></filter>
+  <filter id="grain"><feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" stitchTiles="stitch"/>
+    <feColorMatrix values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .35 0"/></filter>
+  <pattern id="noise" width="120" height="40" patternUnits="userSpaceOnUse"><rect width="120" height="40" filter="url(#grain)"/></pattern>
+  <filter id="jit" x="-10%" y="-40%" width="120%" height="180%"><feTurbulence type="turbulence" baseFrequency=".02 .6" numOctaves="1" seed="7"/>
+    <feDisplacementMap in="SourceGraphic" scale="9" xChannelSelector="R" yChannelSelector="G"/></filter>
 </defs>
 <style>
-  .mono{{font-family:{MONO}}}
-  .chip{{opacity:0;animation:in .4s ease-out forwards}}
+  {base_css()}
+  {loader_css()}
+  text{{font-family:{MONO}}}
+  .chip,.in{{opacity:0;animation:in .4s ease-out forwards}}
   @keyframes in{{from{{opacity:0;transform:translateX(-10px)}}to{{opacity:1;transform:none}}}}
-  .scan{{opacity:0;animation:scan 4.5s ease-in-out infinite}}
-  @keyframes scan{{0%{{opacity:0;transform:translateX(0)}}5%{{opacity:1}}40%{{opacity:1;transform:translateX({W - X_CHIPS - 80}px)}}45%,100%{{opacity:0;transform:translateX({W - X_CHIPS - 80}px)}}}}
-  .blink{{animation:blink 1s steps(1) infinite}} @keyframes blink{{50%{{opacity:0}}}}
+  .gx{{animation-name:gx;animation-timing-function:steps(1);animation-iteration-count:infinite}}
+  @keyframes gx{{0%,100%{{filter:none;transform:none}}90%{{filter:url(#jit);transform:translateX(-2px)}}92%{{filter:url(#jit);transform:translateX(2px)}}94%{{filter:none;transform:none}}}}
 </style>
-<path d="M16 1 H{W - 30} L{W - 1} 30 V{H - 16} L{W - 16} {H - 1} H30 L1 {H - 30} V16 Z" fill="#05070D" stroke="url(#frame)" stroke-width="1.5"/>
-<path d="M1 46 H{W - 1}" stroke="{CY}" stroke-opacity=".25"/>
-<g class="mono" font-size="12" letter-spacing="1.5">
-  <rect x="18" y="16" width="8" height="14" fill="{CY}"/>
-  <text x="34" y="28" fill="{CY}">CYBERWARE // INSTALLED MODULES</text>
-  <text x="{W - 40}" y="28" fill="{OR}" text-anchor="end">{total} MODULES ONLINE</text>
-  <circle cx="{W - 28}" cy="24" r="4" fill="{CY}" class="blink"/>
+
+{frame(W, H)}
+{not_found(W / 2, H / 2 + 6, 80)}
+<g class="content">
+  {title_bar(W, "INSTALLED MODULES", f'<tspan fill="{OR}">{total}</tspan> ONLINE')}
+  {chr(10).join(parts)}
 </g>
-{chr(10).join(parts)}
-<rect x="2" y="47" width="{W - 4}" height="{H - 60}" fill="url(#crt)"/>
 </svg>
 '''
     out = Path(__file__).resolve().parent.parent / "assets" / "skills.svg"
