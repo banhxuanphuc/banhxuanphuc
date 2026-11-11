@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 60" width="600" height="60">
+  <defs>
+    <!-- Khai báo dải màu cam gradient -->
+    <linearGradient id="orange-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#FF512F" />
+      <stop offset="100%" stop-color="#F09819" />
+    </linearGradient>
+  </defs>
+  
+  <style>
+    /* Font chữ và màu sắc cơ bản (màu xám sáng của GitHub Dark Mode) */
+    .text-container {
+      font-family: 'Fira Code', 'Courier New', Courier, monospace;
+      font-size: 26px;
+      font-weight: bold;
+      fill: #c9d1d9; 
+    }
+    
+    /* Gán màu gradient cho biệt danh */
+    .name {
+      fill: url(#orange-gradient);
+    }
+    
+    /* Hiệu ứng nhấp nháy cho con trỏ (dấu nháy) */
+    .cursor {
+      fill: #c9d1d9;
+      animation: blink 0.8s infinite;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    /* Hiệu ứng quét từ trái sang phải để giả lập gõ phím */
+    .typing {
+      animation: typing-effect 2.5s steps(40, end) forwards;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+    @keyframes typing-effect {
+      from { clip-path: polygon(0 0, 0 0, 0 100%, 0 100%); }
+      to { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
+    }
+  </style>
+
+  <!-- Group chứa văn bản áp dụng hiệu ứng -->
+  <g class="typing">
+    <text x="10" y="40" class="text-container">
+      Hi there 👋 I'm <tspan class="name">NoName</tspan><tspan class="cursor">_</tspan>
+    </text>
+  </g>
+</svg>
