@@ -21,7 +21,7 @@ import argparse
 import html
 from pathlib import Path
 
-from theme import BG, BLUE, CY, DIM, OR, T_READY, base_css, defs, frame, loader_css, not_found, title_bar
+from theme import BG, BLUE, CY, DIM, MONO, OR, T_READY, base_css, defs, frame, loader_css, not_found, title_bar
 
 RAMP = " .:^~!7?JY5PGB#&@"      # dense last: on black, dense = bright
 W, H = 480, 640
@@ -34,73 +34,85 @@ H_BANDS = [(0.16, 0.21, "gl-a", 4.3, 2.6), (0.38, 0.42, "gl-b", 5.9, 3.4),
 # vertical / diagonal slices: (kind, x_frac, width_px, dx, dy, duration, delay)
 SLICES = [("v", 0.22, 22, 0, -9, 5.3, 3.0), ("v", 0.63, 16, 0, 7, 7.1, 5.2),
           ("d", 0.40, 18, 6, -6, 6.3, 4.4)]
-# "hacked" overexposure flash: an X-shaped white/red splash over the eye.
-# HACK_AT is (row, col) in the text grid - tuned for scripts/avatar.txt
-HACK_AT = (23.0, 66.0)
-HACK_HALF = (128, 100)           # half width / half height of the X in px
-HACK_EVERY = 15                  # seconds between flashes
-DARK_RED = "#9B0018"
+# "hacked" glitch: every HACK_EVERY s the whole card flickers to an inverted
+# (white) state for HACK_LEN s and a skewed ERROR bar covers the eyes.
+HACK_EVERY = 15                  # seconds between glitches
+HACK_LEN = 1.5                   # seconds the glitch lasts
+# ERROR bar: parallelogram corners (x, y) - tuned for scripts/avatar.txt
+BAR = [(246, 252), (470, 243), (458, 313), (234, 322)]
 
 
-def hack_overlay(cx: float, cy: float) -> tuple[str, str]:
-    """Return (defs, markup) for the X-shaped overexposed splash centred on (cx, cy)."""
-    import math
-    import random
-    rnd = random.Random(2077)
-    hx, hy = HACK_HALF
-    arms = [((cx - hx, cy - hy), (cx + hx, cy + hy)), ((cx + hx * .9, cy - hy), (cx - hx * .9, cy + hy))]
+def _pct(t: float) -> str:
+    """seconds inside the glitch window -> keyframe percentage of the HACK_EVERY cycle"""
+    return f"{(HACK_EVERY - HACK_LEN + t) / HACK_EVERY * 100:.2f}%"
 
-    def stroke(a, b, jitter, width, color, op):
-        pts, n = [], 7
-        for k in range(n + 1):
-            t = k / n
-            px = a[0] + (b[0] - a[0]) * t + rnd.uniform(-jitter, jitter)
-            py = a[1] + (b[1] - a[1]) * t + rnd.uniform(-jitter, jitter)
-            pts.append(f"{px:.1f} {py:.1f}")
-        return (f'<path d="M{" L".join(pts)}" fill="none" stroke="{color}" stroke-width="{width:.1f}" '
-                f'stroke-linecap="round" stroke-linejoin="round" opacity="{op}"/>')
 
-    # white blown-out X (blurred), then red ink strokes on top
-    white = "".join(stroke(a, b, 8, 62, "#fff", 1) for a, b in arms)
-    white += f'<ellipse cx="{cx}" cy="{cy}" rx="70" ry="54" fill="url(#blowout)"/>'
-    reds = []
-    for a, b in arms:
-        for _ in range(5):
-            reds.append(stroke(a, b, 22, rnd.uniform(3, 16), rnd.choice([RED, RED, DARK_RED]), rnd.choice([.75, .9, 1])))
-    # thorn-like scratches flying out of the centre
-    thorns = []
-    for _ in range(26):
-        ang = rnd.uniform(0, 2 * math.pi)
-        r0, r1 = rnd.uniform(10, 40), rnd.uniform(60, 165)
-        x0, y0 = cx + math.cos(ang) * r0, cy + math.sin(ang) * r0 * .8
-        x1, y1 = cx + math.cos(ang) * r1, cy + math.sin(ang) * r1 * .8
-        bend = rnd.uniform(-30, 30)
-        mx, my = (x0 + x1) / 2 + bend, (y0 + y1) / 2 - bend
-        thorns.append(f'<path d="M{x0:.1f} {y0:.1f} Q{mx:.1f} {my:.1f} {x1:.1f} {y1:.1f}" fill="none" '
-                      f'stroke="{rnd.choice([RED, RED, DARK_RED, "#fff"])}" stroke-width="{rnd.uniform(.8, 3.2):.1f}" '
-                      f'stroke-linecap="round"/>')
-    drops = "".join(f'<circle cx="{cx + rnd.uniform(-hx, hx):.1f}" cy="{cy + rnd.uniform(-hy, hy):.1f}" '
-                    f'r="{rnd.uniform(1, 4):.1f}" fill="{rnd.choice([RED, DARK_RED, "#fff"])}"/>' for _ in range(30))
-    xclip = "".join(stroke(a, b, 0, 70, "#fff", 1) for a, b in arms)
+def _frames(windows: list[tuple[float, float]], on: str, off: str) -> str:
+    """keyframes that are `on` inside each (start, end) window (seconds into the glitch) and `off` elsewhere"""
+    out = [f"0%,100%{{{{{off}}}}}"]
+    for a, b in windows:
+        out.append(f"{_pct(a)}{{{{{on}}}}}{_pct(b)}{{{{{off}}}}}")
+    return "".join(out)
 
-    d = f'''<filter id="ink" x="-30%" y="-30%" width="160%" height="160%">
-    <feTurbulence type="fractalNoise" baseFrequency=".045" numOctaves="3" seed="9"/>
-    <feDisplacementMap in="SourceGraphic" scale="18" xChannelSelector="R" yChannelSelector="G"/></filter>
-  <filter id="burn" x="-30%" y="-30%" width="160%" height="160%">
-    <feTurbulence type="fractalNoise" baseFrequency=".03" numOctaves="2" seed="4"/>
-    <feDisplacementMap in="SourceGraphic" scale="24" xChannelSelector="R" yChannelSelector="G" result="d"/>
-    <feGaussianBlur in="d" stdDeviation="2.5"/></filter>
-  <radialGradient id="blowout"><stop offset="0" stop-color="#fff"/><stop offset=".6" stop-color="#fff" stop-opacity=".85"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
-  <mask id="xmask"><rect width="{W}" height="{H}" fill="#000"/>{xclip}</mask>'''
-    m = f'''<g class="hack">
-      <rect x="{ART_BOX[0]}" y="{ART_BOX[1]}" width="{ART_BOX[2]}" height="{ART_BOX[3]}" fill="{RED}" opacity=".07"/>
-      <g mask="url(#xmask)"><use href="#rows" fill="{RED}" transform="translate(4 1)"/></g>
-      <g filter="url(#burn)" opacity=".92">{white}</g>
-      <g mask="url(#xmask)"><use href="#rows" fill="#fff"/></g>
-      <g filter="url(#ink)">{"".join(reds)}{"".join(thorns)}</g>
-      {drops}
-    </g>'''
-    return d, m
+
+def hack_overlay() -> tuple[str, str, str]:
+    """Return (defs, css, markup) for the ERROR bar + desynced slices."""
+    pts = " ".join(f"{x},{y}" for x, y in BAR)
+    cx = sum(x for x, _ in BAR) / 4
+    cy = sum(y for _, y in BAR) / 4
+    ang = -2.3
+    d = f'''<filter id="invert" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values="-1 0 0 0 1  0 -1 0 0 1  0 0 -1 0 1  0 0 0 1 0"/></filter>
+  <g id="errbar">
+    <polygon points="{pts}" fill="#05070a" stroke="#fff" stroke-width="1.6"/>
+    <polygon points="{pts}" fill="url(#crt)"/>
+    <g font-family="{MONO}" font-weight="800" font-size="46" text-anchor="middle" letter-spacing="3" transform="rotate({ang} {cx:.0f} {cy:.0f})">
+      <g class="etxt"><text x="{cx - 9:.0f}" y="{cy + 16:.0f}" fill="{CY}" opacity=".85" textLength="178" lengthAdjust="spacingAndGlyphs">ERROR</text>
+        <text x="{cx - 6:.0f}" y="{cy + 16:.0f}" fill="{RED}" textLength="178" lengthAdjust="spacingAndGlyphs">ERROR</text></g>
+      <g class="qtxt"><text x="{cx - 3:.0f}" y="{cy + 16:.0f}" fill="{CY}" opacity=".85">???</text>
+        <text x="{cx:.0f}" y="{cy + 16:.0f}" fill="{RED}">???</text></g>
+    </g>
+  </g>
+  <clipPath id="cut1"><rect x="0" y="{cy - 10:.0f}" width="{W}" height="13"/></clipPath>
+  <clipPath id="cut2"><rect x="0" y="{cy + 10:.0f}" width="{W}" height="11"/></clipPath>'''
+    G = HACK_LEN
+    css = f'''.inv{{{{animation:inv {HACK_EVERY}s steps(1) {{t_hack:.1f}}s infinite}}}}
+  @keyframes inv{{{{{_frames([(0, .1), (.18, .23), (.32, .5), (.56, .62), (.74, .95), (1.0, 1.06), (1.18, 1.3), (1.36, 1.43)], "filter:url(#invert)", "filter:none;transform:none")}}}}}
+  .shake{{{{animation:shake {HACK_EVERY}s steps(1) {{t_hack:.1f}}s infinite}}}}
+  @keyframes shake{{{{{_frames([(.2, .26), (.6, .66), (1.12, 1.18)], "transform:translate(-4px,1px)", "transform:none")}{_frames([(.4, .45), (.9, .96)], "transform:translate(3px,-1px)", "transform:none")[len("0%,100%{{transform:none}}"):]}}}}}
+  .err{{{{opacity:0;animation:err {HACK_EVERY}s steps(1) {{t_hack:.1f}}s infinite}}}}
+  @keyframes err{{{{{_frames([(.03, .58), (.64, 1.47)], "opacity:1", "opacity:0")}}}}}
+  .ej{{{{animation:ej {HACK_EVERY}s steps(1) {{t_hack:.1f}}s infinite}}}}
+  @keyframes ej{{{{{_frames([(.15, .21), (.7, .76), (1.25, 1.3)], "transform:translate(7px,-2px)", "transform:none")}}}}}
+  .etxt{{{{animation:etxt {HACK_EVERY}s steps(1) {{t_hack:.1f}}s infinite}}}}
+  @keyframes etxt{{{{{_frames([(.78, .9), (1.2, 1.28)], "opacity:0", "opacity:1")}}}}}
+  .qtxt{{{{opacity:0;animation:qtxt {HACK_EVERY}s steps(1) {{t_hack:.1f}}s infinite}}}}
+  @keyframes qtxt{{{{{_frames([(.78, .9), (1.2, 1.28)], "opacity:1", "opacity:0")}}}}}
+  .s1{{{{opacity:0;animation:s1 {HACK_EVERY}s steps(1) {{t_hack:.1f}}s infinite}}}}
+  @keyframes s1{{{{{_frames([(.08, .25), (.75, .9), (1.2, 1.32)], "opacity:1", "opacity:0")}}}}}
+  .s2{{{{opacity:0;animation:s2 {HACK_EVERY}s steps(1) {{t_hack:.1f}}s infinite}}}}
+  @keyframes s2{{{{{_frames([(.18, .29), (.6, .68), (1.08, 1.19)], "opacity:1", "opacity:0")}}}}}
+  .s3{{{{opacity:0;animation:s3 {HACK_EVERY}s steps(1) {{t_hack:.1f}}s infinite}}}}
+  @keyframes s3{{{{{_frames([(.36, .47), (.98, 1.05), (1.35, 1.41)], "opacity:1", "opacity:0")}}}}}
+  .s4{{{{opacity:0;animation:s4 {HACK_EVERY}s steps(1) {{t_hack:.1f}}s infinite}}}}
+  @keyframes s4{{{{{_frames([(.13, .3), (.87, 1.0)], "opacity:1", "opacity:0")}}}}}
+  .alien{{{{opacity:0;animation:alien {HACK_EVERY}s steps(1) {{t_hack:.1f}}s infinite}}}}
+  @keyframes alien{{{{{_frames([(0, 1.45)], "opacity:1", "opacity:0")}}}}}
+  .human{{{{animation:human {HACK_EVERY}s steps(1) {{t_hack:.1f}}s infinite}}}}
+  @keyframes human{{{{{_frames([(0, 1.45)], "opacity:0", "opacity:1")}}}}}'''
+    css = css.replace("{{", "{").replace("}}", "}")
+    (x0, y0), (x1, y1) = BAR[0], BAR[3]
+    m = f'''<g class="err"><g class="ej">
+    <use href="#errbar"/>
+    <g class="s1"><polygon points="12,{y0 + 3} {x0 + 6},{y0} {x0 + 3},{y0 + 15} 10,{y0 + 18}" fill="#05070a"/>
+      <path d="M12 {y0 + 3} L{x0 + 6} {y0}" stroke="{RED}" stroke-width="2"/><path d="M10 {y0 + 18} L{x0 + 3} {y0 + 15}" stroke="{CY}" stroke-width="1.5"/></g>
+    <g class="s2" clip-path="url(#cut1)"><use href="#errbar" transform="translate(24 0)"/></g>
+    <g class="s3" clip-path="url(#cut2)"><use href="#errbar" transform="translate(-32 0)"/></g>
+    <g class="s4"><rect x="134" y="{y0 - 48}" width="7" height="46" fill="#05070a"/><rect x="134" y="{y0 - 48}" width="2" height="46" fill="{RED}"/>
+      <polygon points="166,{y1 - 14} {x1 - 14},{y1 - 44} {x1 - 8},{y1 - 37} 172,{y1 - 7}" fill="#05070a"/>
+      <path d="M166 {y1 - 14} L{x1 - 14} {y1 - 44}" stroke="{CY}" stroke-width="1.5"/></g>
+  </g></g>
+<text x="20" y="{H - 18}" font-family="{MONO}" font-size="12" letter-spacing="1.5" fill="{DIM}" class="alien">RACE: <tspan fill="{RED}" font-weight="700">???</tspan></text>'''
+    return d, css, m
 
 
 def load_text(path: Path) -> list[str]:
@@ -179,7 +191,7 @@ def build_svg(lines: list[str]) -> str:
                       f'<use href="#rows" transform="translate({dx} {dy})"/></g>')
 
     # (X 0) eye flash
-    hack_defs, hack = hack_overlay(ox + HACK_AT[1] * cw, oy + HACK_AT[0] * lh)
+    hack_defs, hack_css, hack = hack_overlay()
     t_hack = T + 7
 
     beam_y0 = oy - 4
@@ -206,10 +218,7 @@ def build_svg(lines: list[str]) -> str:
   @keyframes gl-b{{0%,100%{{transform:translateX(0)}}88%{{transform:translateX(6px);fill:#fff}}90%{{transform:translateX(-4px);fill:{CY}}}92%{{transform:translateX(0)}}}}
   .sl{{opacity:0;animation-name:sl;animation-timing-function:steps(1);animation-iteration-count:infinite}}
   @keyframes sl{{0%,100%{{opacity:0}}90%{{opacity:1}}92%{{opacity:0}}94%{{opacity:1}}95%{{opacity:0}}}}
-  .hack,.alien{{opacity:0;animation:hack {HACK_EVERY}s steps(1) {t_hack:.1f}s infinite}}
-  .human{{animation:human {HACK_EVERY}s steps(1) {t_hack:.1f}s infinite}}
-  @keyframes hack{{0%,100%{{opacity:0}}88%{{opacity:1;transform:translate(-4px,1px)}}88.6%{{opacity:.15}}89.2%{{opacity:1;transform:translate(3px,-2px)}}90%{{opacity:1;transform:none}}94.5%{{opacity:1;transform:translate(-2px,0)}}95%{{opacity:.3}}95.4%{{opacity:1;transform:none}}96.6%{{opacity:0}}97%{{opacity:.7}}97.4%{{opacity:0}}}}
-  @keyframes human{{0%,100%{{opacity:1}}88%{{opacity:0}}97.4%{{opacity:1}}}}
+  {hack_css.replace("{t_hack:.1f}", f"{t_hack:.1f}")}
   .beam{{opacity:0;animation:beam {rows * step + 0.5:.2f}s linear {start:.2f}s forwards}}
   @keyframes beam{{0%{{opacity:1;transform:translateY(0)}}96%{{opacity:1}}100%{{opacity:0;transform:translateY({art_h + 8:.1f}px)}}}}
   .sweep{{opacity:0;animation:sweep 5s linear {boot_end:.2f}s infinite}}
@@ -218,6 +227,7 @@ def build_svg(lines: list[str]) -> str:
   .ok{{opacity:0;animation:show .3s {boot_end:.2f}s forwards}}
 </style>
 
+<g class="inv"><g class="shake">
 {frame(W, H)}
 {not_found(W / 2, H / 2, 92)}
 <g class="content">
@@ -227,7 +237,6 @@ def build_svg(lines: list[str]) -> str:
 {chr(10).join("      " + b for b in body if b)}
     </g></g>
     {"".join(slices)}
-    {hack}
     <rect x="{bx}" y="0" width="{bw}" height="120" fill="url(#sweep)" class="sweep"/>
     <g class="beam"><rect x="{bx}" y="{beam_y0:.1f}" width="{bw}" height="2" fill="{CY}"/><rect x="{bx}" y="{beam_y0 - 14:.1f}" width="{bw}" height="14" fill="{CY}" opacity=".12"/></g>
   </g>
@@ -239,9 +248,10 @@ def build_svg(lines: list[str]) -> str:
   </g>
   <g class="mono ok" font-size="12" letter-spacing="1.5">
     <text x="20" y="{H - 18}" fill="{DIM}" class="human">RACE: <tspan fill="{CY}">human</tspan></text>
-    <text x="20" y="{H - 18}" fill="{DIM}" class="alien">RACE: <tspan fill="{RED}" font-weight="700">???</tspan></text>
   </g>
 </g>
+</g></g>
+{hack}
 </svg>
 """
 
