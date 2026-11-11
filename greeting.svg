@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 60" width="100%" height="60">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 80" width="100%" height="80">
   <defs>
     <!-- Khai báo dải màu cam gradient -->
     <linearGradient id="orange-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -6,6 +6,9 @@
       <stop offset="100%" stop-color="#F09819" />
     </linearGradient>
   </defs>
+
+  <!-- Khung nền đen của Terminal -->
+  <rect width="100%" height="100%" fill="#0d1117" rx="8" stroke="#30363d" stroke-width="1.5" />
   
   <style>
     /* Font chữ và màu sắc cơ bản */
@@ -29,38 +32,38 @@
       50% { opacity: 0; }
     }
 
-    /* 1. Hiệu ứng gõ chữ System.init (Từ 0s đến 1s) */
+    /* 1. Hiệu ứng gõ chữ System.init (Mở rộng lề trái -10px để không cắt chữ) */
     .type-init {
-      clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
+      clip-path: polygon(-10px -10px, -10px -10px, -10px 100px, -10px 100px);
       animation: type-init-anim 7s forwards;
     }
     @keyframes type-init-anim {
-      0% { clip-path: polygon(0 0, 0 0, 0 100%, 0 100%); }
-      15%, 100% { clip-path: polygon(0 0, 260px 0, 260px 100%, 0 100%); }
+      0% { clip-path: polygon(-10px -10px, -10px -10px, -10px 100px, -10px 100px); }
+      15%, 100% { clip-path: polygon(-10px -10px, 300px -10px, 300px 100px, -10px 100px); }
     }
 
-    /* 2. Hiển thị vòng xoay loading trong 2 giây (Từ 1s đến 3.15s) */
+    /* 2. Hiển thị vòng xoay loading trong 2 giây */
     .spinner-visibility {
       opacity: 0;
       animation: vis-spinner 7s forwards;
     }
     @keyframes vis-spinner {
-      0%, 15% { opacity: 0; }        /* Chờ chữ init gõ xong */
-      15.1%, 44.9% { opacity: 1; }   /* Hiện vòng quay */
-      45%, 100% { opacity: 0; }      /* Ẩn đi khi check xanh xuất hiện */
+      0%, 15% { opacity: 0; }        
+      15.1%, 44.9% { opacity: 1; }   
+      45%, 100% { opacity: 0; }      
     }
     .spinner-spin {
-      transform-origin: 270px 32px;
+      transform-origin: 280px 42px; 
       animation: spin 0.8s linear infinite;
     }
     @keyframes spin { 
       100% { transform: rotate(360deg); } 
     }
 
-    /* 3. Dấu check xanh xuất hiện (Tại giây thứ 3.15) */
+    /* 3. Dấu check xanh xuất hiện */
     .check {
       opacity: 0;
-      fill: #4ade80; /* Màu xanh lá hacker */
+      fill: #4ade80; 
       animation: vis-check 7s forwards;
     }
     @keyframes vis-check {
@@ -68,33 +71,32 @@
       45%, 100% { opacity: 1; }
     }
 
-    /* 4. Hiệu ứng gõ vế sau (Từ 3.5s đến 6s) */
+    /* 4. Hiệu ứng gõ vế sau (Mở rộng lề trái -10px để hiển thị trọn vẹn chữ I) */
     .type-rest {
-      clip-path: polygon(290px 0, 290px 0, 290px 100%, 290px 100%);
+      clip-path: polygon(-10px -10px, -10px -10px, -10px 100px, -10px 100px);
       animation: type-rest-anim 7s forwards;
     }
     @keyframes type-rest-anim {
-      0%, 50% { clip-path: polygon(290px 0, 290px 0, 290px 100%, 290px 100%); } /* Tạm dừng chờ loading */
-      85%, 100% { clip-path: polygon(290px 0, 900px 0, 900px 100%, 290px 100%); } /* Chạy chữ */
+      0%, 50% { clip-path: polygon(-10px -10px, -10px -10px, -10px 100px, -10px 100px); } 
+      85%, 100% { clip-path: polygon(-10px -10px, 900px -10px, 900px 100px, -10px 100px); } 
     }
   </style>
 
-  <!-- Group chứa văn bản -->
-  <text y="40" class="text-container">
-    <!-- Phần 1: Gõ lệnh init -->
-    <tspan x="10" class="type-init">> System.init():</tspan>
-    
-    <!-- Phần 2: Dấu check xanh (được neo tọa độ cố định) -->
-    <tspan x="260" class="check">✔</tspan>
-    
-    <!-- Phần 3: Gõ nốt phần còn lại -->
-    <tspan x="290" class="type-rest">I'm Phúc, you can call me [<tspan class="name">noName25</tspan>]<tspan class="cursor">_</tspan></tspan>
-  </text>
+  <!-- Đã thay đổi: Dùng các thẻ <text> riêng biệt thay vì <tspan> để clip-path hoạt động chuẩn xác -->
+  
+  <!-- Phần 1: Gõ lệnh init -->
+  <text x="20" y="50" class="text-container type-init">> System.init():</text>
+  
+  <!-- Phần 2: Dấu check xanh -->
+  <text x="270" y="50" class="text-container check">✔</text>
+  
+  <!-- Phần 3: Gõ nốt phần còn lại -->
+  <text x="300" y="50" class="text-container type-rest">I'm Phúc, you can call me [<tspan class="name">noName25</tspan>]<tspan class="cursor">_</tspan></text>
 
-  <!-- Phần 4: Vẽ vòng loading xoay tròn bằng đồ họa vector -->
+  <!-- Phần 4: Vòng loading xoay tròn -->
   <g class="spinner-visibility">
     <g class="spinner-spin">
-      <circle cx="270" cy="32" r="8" fill="none" stroke="#c9d1d9" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="30" stroke-dashoffset="15" />
+      <circle cx="280" cy="42" r="8" fill="none" stroke="#c9d1d9" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="30" stroke-dashoffset="15" />
     </g>
   </g>
 </svg>
