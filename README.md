@@ -1,20 +1,19 @@
 <div align="center">
-  <img src="./greeting.svg" alt="Animated Greeting" />
+  <img src="./greeting.svg" alt="Animated Greeting" width="100%" />
 </div>
 
-<br>
-
-<table width="100%">
+<!-- Khối Terminal Info & Tech Stack -->
+<table width="100%" style="margin-top: 15px;">
   <tr>
-    <!-- Cột trái: Nơi chứa ASCII Art -->
-    <td width="45%" valign="top">
+    <!-- Cột trái: ASCII Art -->
+    <td width="40%" valign="top">
 <pre><code>
-<!-- BẠN PASTE ẢNH ASCII CỦA BẠN VÀO ĐÂY (Xóa dòng này đi) -->
+<!-- BẠN PASTE ẢNH ASCII CỦA BẠN VÀO ĐÂY -->
 </code></pre>
     </td>
 
-<!-- Cột phải: Thông tin cá nhân và Kỹ năng -->
-<td width="55%" valign="top">
+<!-- Cột phải: Thông tin -->
+<td width="60%" valign="top">
   <h3>Terminal._</h3>
   <hr>
   <ul>
@@ -27,13 +26,11 @@
   <h3>🛠️ Tech Stack</h3>
   <hr>
   <p>
-    <!-- Ngôn ngữ -->
     <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python"/>
     <img src="https://img.shields.io/badge/PHP-777BB4?style=for-the-badge&logo=php&logoColor=white" alt="PHP"/>
     <img src="https://img.shields.io/badge/SQL%20Server-CC2927?style=for-the-badge&logoColor=white" alt="SQL Server"/>
     <img src="https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=java&logoColor=white" alt="Java"/>
     <br>
-    <!-- Framework & Tools -->
     <img src="https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white" alt="Laravel"/>
     <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white" alt="Docker"/>
     <img src="https://img.shields.io/badge/PowerBI-F2C811?style=for-the-badge&logo=Power%20BI&logoColor=black" alt="Power BI"/>
@@ -42,29 +39,20 @@
   </tr>
 </table>
 
-<br>
-
+<!-- Khối Thống kê (Gộp chung để tiết kiệm không gian) -->
 <div align="center">
+  <h3>📊 GitHub Analytics</h3>
+  
+  <!-- Hiển thị 2 thẻ stats nằm ngang sát nhau -->
+  <img height="165" src="https://github-readme-stats.vercel.app/api?username=banhxuanphuc&show_icons=true&theme=github_dark&hide_border=true&bg_color=0d1117" />
+  <img height="165" src="https://streak-stats.demolab.com?user=banhxuanphuc&theme=github-dark-blue&hide_border=true&background=0d1117" />
+  
+  <br><br>
 
-### 🟩 Contribution Graph
-
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/banhxuanphuc/banhxuanphuc/output/github-snake-dark.svg" />
-  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/banhxuanphuc/banhxuanphuc/output/github-snake.svg" />
-  <img alt="contribution graph" src="https://raw.githubusercontent.com/banhxuanphuc/banhxuanphuc/output/github-snake-dark.svg" />
-</picture>
-
-<br><br>
-
-### 📊 GitHub Stats
-
-<img height="165" src="https://github-readme-stats.vercel.app/api?username=banhxuanphuc&show_icons=true&theme=github_dark&hide_border=true" />
-<img height="165" src="https://streak-stats.demolab.com?user=banhxuanphuc&theme=github-dark-blue&hide_border=true" />
-
+  <!-- Rắn ăn commit (Đã đổi màu qua GitHub Actions) -->
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/banhxuanphuc/banhxuanphuc/output/github-snake-dark.svg" />
+    <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/banhxuanphuc/banhxuanphuc/output/github-snake.svg" />
+    <img alt="contribution snake" src="https://raw.githubusercontent.com/banhxuanphuc/banhxuanphuc/output/github-snake-dark.svg" />
+  </picture>
 </div>
-
-<br>
-
-### 🚀 Projects
-
-*📌 Các dự án nổi bật sẽ được ghim trực tiếp thông qua tính năng "Customize your pins" trên trang cá nhân GitHub.*
