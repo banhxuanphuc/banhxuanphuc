@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 696 640" width="696" height="640" role="img" aria-label="About Phúc (noName25): Information Systems student at UIT, VNU-HCM. Focus: Backend, Data Warehousing, BPM.">
+<title>DOSSIER // noName25</title>
+<defs>
+  <linearGradient id="frame" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#00F0FF"/><stop offset=".55" stop-color="#2D7CFF"/><stop offset="1" stop-color="#FF9E00"/></linearGradient>
+  <linearGradient id="g" gradientUnits="userSpaceOnUse" x1="26" y1="0" x2="356" y2="0"><stop offset="0" stop-color="#00F0FF"/><stop offset=".5" stop-color="#5AA9FF"/><stop offset="1" stop-color="#FF9E00"/></linearGradient>
+  <pattern id="crt" width="4" height="3" patternUnits="userSpaceOnUse"><rect width="4" height="1" fill="#000" opacity=".3"/></pattern>
+  <pattern id="dots" width="22" height="22" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="#00F0FF" opacity=".12"/></pattern>
+</defs>
+<style>
+  .mono{font-family:'Cascadia Mono',Consolas,'SFMono-Regular',Menlo,'Courier New',monospace}
+  text{white-space:pre}
+  .body text{clip-path:inset(0 100% 0 0)}
+  @keyframes type{to{clip-path:inset(0 0 0 0)}}
+  .cur{opacity:0;animation:show 0s 6.94s forwards, blink 1s steps(1) 6.94s infinite}
+  @keyframes show{to{opacity:1}} @keyframes blink{50%{opacity:0}}
+  .blink{animation:blink 1s steps(1) infinite}
+  .bar{transform-box:fill-box;transform-origin:left;transform:scaleX(0);animation:bar 7.09s cubic-bezier(.6,.1,.3,1) .4s forwards}
+  @keyframes bar{to{transform:scaleX(1)}}
+  .pct{opacity:0;animation:show .2s 7.49s forwards}
+  .sweep{animation:sweep 6s linear 7.09s infinite;opacity:0}
+  @keyframes sweep{0%{opacity:1;transform:translateY(-80px)}100%{opacity:1;transform:translateY(640px)}}
+</style>
+
+<path d="M16 1 H666 L695 30 V624 L680 639 H30 L1 610 V16 Z" fill="#05070D" stroke="url(#frame)" stroke-width="1.5"/>
+<rect x="2" y="47" width="692" height="540" fill="url(#dots)"/>
+<path d="M1 46 H695" stroke="#00F0FF" stroke-opacity=".25"/>
+<path d="M1 588 H695" stroke="#00F0FF" stroke-opacity=".25"/>
+<rect x="2" y="0" width="692" height="80" fill="#00F0FF" fill-opacity=".04" class="sweep"/>
+
+<g class="mono" font-size="12" letter-spacing="1.5">
+  <rect x="18" y="16" width="8" height="14" fill="#FF9E00"/>
+  <text x="34" y="28" fill="#00F0FF">DOSSIER // noName25.yml</text>
+  <text x="656" y="28" fill="#FF9E00" text-anchor="end">SECURE LINK</text>
+  <circle cx="668" cy="24" r="4" fill="#00F0FF" class="blink"/>
+</g>
+
+<g class="mono body">
+    <text x="26" y="88" font-size="15" textLength="261.0" lengthAdjust="spacingAndGlyphs" style="animation:type 0.64s steps(29) 0.50s forwards"><tspan fill="#00F0FF">noName25</tspan><tspan fill="#6B7A90">@</tspan><tspan fill="#FF9E00">neo-saigon</tspan><tspan fill="#6B7A90">:~$ </tspan><tspan fill="#C9D4E3">whoami</tspan></text>
+  <text x="26" y="120" font-size="22" font-weight="700" textLength="303.6" lengthAdjust="spacingAndGlyphs" style="animation:type 0.25s steps(5) 1.29s forwards"><tspan fill="url(#g)">Phúc</tspan><tspan fill="#6B7A90">  ·  a.k.a </tspan><tspan fill="url(#g)">noName25</tspan></text>
+  <text x="26" y="148" font-size="15" textLength="405.0" lengthAdjust="spacingAndGlyphs" style="animation:type 0.25s steps(11) 1.59s forwards"><tspan fill="#C9D4E3">Information Systems undergrad @ UIT · VNU-HCM</tspan></text>
+  <text x="26" y="194" font-size="15" textLength="342.0" lengthAdjust="spacingAndGlyphs" style="animation:type 0.84s steps(38) 1.89s forwards"><tspan fill="#00F0FF">noName25</tspan><tspan fill="#6B7A90">@</tspan><tspan fill="#FF9E00">neo-saigon</tspan><tspan fill="#6B7A90">:~$ </tspan><tspan fill="#C9D4E3">cat profile.yml</tspan></text>
+  <text x="26" y="222" font-size="15" textLength="504.0" lengthAdjust="spacingAndGlyphs" style="animation:type 0.28s steps(14) 2.87s forwards"><tspan fill="#2D7CFF">  education </tspan><tspan fill="#6B7A90">: </tspan><tspan fill="#C9D4E3">UIT · University of Information Technology</tspan></text>
+  <text x="26" y="250" font-size="15" textLength="396.0" lengthAdjust="spacingAndGlyphs" style="animation:type 0.25s steps(11) 3.20s forwards"><tspan fill="#2D7CFF">  major     </tspan><tspan fill="#6B7A90">: </tspan><tspan fill="#C9D4E3">Information Systems</tspan><tspan fill="#6B7A90"> · </tspan><tspan fill="#FF9E00">3rd-year</tspan></text>
+  <text x="26" y="278" font-size="15" textLength="414.0" lengthAdjust="spacingAndGlyphs" style="animation:type 0.25s steps(11) 3.50s forwards"><tspan fill="#2D7CFF">  focus     </tspan><tspan fill="#6B7A90">: </tspan><tspan fill="#00F0FF">Backend</tspan><tspan fill="#6B7A90"> · </tspan><tspan fill="#00F0FF">Data Warehousing</tspan><tspan fill="#6B7A90"> · </tspan><tspan fill="#00F0FF">BPM</tspan></text>
+  <text x="26" y="306" font-size="15" textLength="486.0" lengthAdjust="spacingAndGlyphs" style="animation:type 0.27s steps(13) 3.80s forwards"><tspan fill="#2D7CFF">  exploring </tspan><tspan fill="#6B7A90">: </tspan><tspan fill="#FF9E00">ML</tspan><tspan fill="#6B7A90"> · </tspan><tspan fill="#FF9E00">Deep Learning</tspan><tspan fill="#6B7A90"> · </tspan><tspan fill="#FF9E00">TensorFlow</tspan><tspan fill="#6B7A90"> · </tspan><tspan fill="#FF9E00">Kaggle</tspan></text>
+  <text x="26" y="334" font-size="15" textLength="504.0" lengthAdjust="spacingAndGlyphs" style="animation:type 0.28s steps(14) 4.12s forwards"><tspan fill="#2D7CFF">  stack     </tspan><tspan fill="#6B7A90">: </tspan><tspan fill="#C9D4E3">Python · PHP/Laravel · SQL Server · Docker</tspan></text>
+  <text x="26" y="362" font-size="15" textLength="315.0" lengthAdjust="spacingAndGlyphs" style="animation:type 0.25s steps(8) 4.45s forwards"><tspan fill="#2D7CFF">  contact   </tspan><tspan fill="#6B7A90">: </tspan><tspan fill="#00F0FF">phuc2006aka@gmail.com</tspan></text>
+  <text x="26" y="408" font-size="15" textLength="360.0" lengthAdjust="spacingAndGlyphs" style="animation:type 0.88s steps(40) 4.75s forwards"><tspan fill="#00F0FF">noName25</tspan><tspan fill="#6B7A90">@</tspan><tspan fill="#FF9E00">neo-saigon</tspan><tspan fill="#6B7A90">:~$ </tspan><tspan fill="#C9D4E3">./quests --active</tspan></text>
+  <text x="26" y="436" font-size="15" textLength="477.0" lengthAdjust="spacingAndGlyphs" style="animation:type 0.27s steps(13) 5.78s forwards"><tspan fill="#FF9E00">  ▸ MAIN QUEST </tspan><tspan fill="#6B7A90">: </tspan><tspan fill="#C9D4E3">ship reliable backend &amp; data systems</tspan></text>
+  <text x="26" y="464" font-size="15" textLength="522.0" lengthAdjust="spacingAndGlyphs" style="animation:type 0.29s steps(14) 6.10s forwards"><tspan fill="#00F0FF">  ▸ SIDE QUEST </tspan><tspan fill="#6B7A90">: </tspan><tspan fill="#C9D4E3">level up in ML / DL, one Kaggle at a time</tspan></text>
+  <text x="26" y="510" font-size="15" textLength="207.0" lengthAdjust="spacingAndGlyphs" style="animation:type 0.51s steps(23) 6.44s forwards"><tspan fill="#00F0FF">noName25</tspan><tspan fill="#6B7A90">@</tspan><tspan fill="#FF9E00">neo-saigon</tspan><tspan fill="#6B7A90">:~$ </tspan></text>
+</g>
+<rect x="235.0" y="497" width="9" height="17" fill="#00F0FF" class="cur"/>
+
+<g class="mono" font-size="12" letter-spacing="1.5">
+  <text x="20" y="610" fill="#6B7A90">LOC <tspan fill="#C9D4E3">HCMC, VN</tspan>  ·  TZ <tspan fill="#C9D4E3">UTC+7</tspan></text>
+  <text x="460" y="610" fill="#6B7A90" text-anchor="end">SYNC</text>
+  <rect x="470" y="600" width="160" height="12" fill="none" stroke="#00F0FF" stroke-opacity=".5"/>
+  <rect x="472" y="602" width="156" height="8" fill="url(#frame)" class="bar"/>
+  <text x="676" y="610" fill="#FF9E00" text-anchor="end" class="pct">100%</text>
+</g>
+<rect x="2" y="47" width="692" height="540" fill="url(#crt)"/>
+</svg>
