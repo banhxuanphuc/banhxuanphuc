@@ -1,7 +1,5 @@
 <div align="center">
-  <a href="https://github.com/banhxuanphuc">
-    <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&pause=1000&color=2496ED&center=true&vCenter=true&width=435&lines=Hi+there+%F0%9F%91%8B+I'm+Phúc;Backend+Developer;Data+Warehouse+Enthusiast" alt="Typing SVG" />
-  </a>
+  <img src="./greeting.svg" alt="Animated Greeting" />
 </div>
 
 <br>
